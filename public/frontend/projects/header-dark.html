@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from etapk.com/projects/header-dark.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Jan 2025 12:29:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link rel="icon" type="assets/image/png" href="../images/logo.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="csrf-token" content="1Gk9kytR4xGYiq89Etg4nxnxNrhZb43R2xrH2zla">
+    <!-- Document title -->
+    <title> - Elegant Testing Agency</title>
+    <!-- Stylesheets & Fonts -->
+    <link href="../assets/css/plugins.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../assets/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome/css/font-awesome.min.css">
+
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="../assets/vendors/css/extensions/toastr.min.css" rel="stylesheet">
+    <link href="../assets/css/notification.css" rel="stylesheet">
+
+
+    	<link rel="stylesheet" href="../assets/plugins/datatables/datatables.min.css">
+
+    <style>
+        body {
+
+            font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji !important;
+
+        }
+
+        .modal .modal-header .close {
+            background: black;
+            color: white;
+            border-radius: 0.357rem;
+            box-shadow: 0 5px 20px 0 rgb(34 41 47 / 10%);
+            opacity: 1;
+            border: black !important;
+            padding: 0.2rem 0.62rem;
+            transform: translate(8px, -2px);
+            transition: all .23s ease .1s;
+        }
+
+        .modal-header .close {
+            font-weight: 600 !important;
+        }
+
+
+        .dynamic {
+            animation: blinker 4s linear infinite !important;
+        }
+
+        /*   Urdu Fonts   */
+        @font-face {
+            font-family: 'urduText';
+            src: url(../assets/fonts/urdu.eot);
+            src: url(../assets/fonts/urdud41dd41d.eot?#iefix) format('embedded-opentype'),
+            url(../assets/fonts/urdu.woff) format('woff'),
+            url(../assets/fonts/urdu.ttf) format('truetype'),
+            url(../assets/fonts/urdu.svg#nafees) format('svg');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        .urdu-heading {
+            font-family: "Jameel Noori Nastaleeq", urduText, Roboto, Arial, serif;
+        }
+
+        .page-title-urdu {
+            font-family: "Jameel Noori Nastaleeq", urduText !important;
+            line-height: initial;
+            font-size: 20px;
+        }
+
+        .page-title-english {
+            font-family: Roboto, Arial, Serif !important;
+            line-height: initial;
+            font-size: 20px;
+        }
+
+
+        .help-block {
+            font-size: 10px;
+            color: red;
+        }
+
+        .dropdown {
+            display: list-item !important;
+        }
+
+
+        table.dataTable thead .sorting:before,
+        table.dataTable thead .sorting_asc:before,
+        table.dataTable thead .sorting_desc:before {
+            background-image: none !important;
+        }
+
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_desc:after {
+            background-image: none !important;
+        }
+
+
+        table.dataTable td,
+        table.dataTable th {
+            padding: 0.2rem 0.2rem !important;
+            font-size: .9125rem !important;
+            text-wrap: none;
+        }
+
+        .blink {
+            animation: blinker 0.6s linear infinite;
+            color: #1c87c9;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+
+        @keyframes  blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .blink-one {
+            animation: blinker-one 1s linear infinite;
+        }
+
+        @keyframes  blinker-one {
+            0% {
+                opacity: 0;
+            }
+        }
+
+        .blink-two {
+            animation: blinker-two 1.4s linear infinite;
+        }
+
+        @keyframes  blinker-two {
+            100% {
+                opacity: 0;
+            }
+        }
+
+        #loading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 99;
+        }
+
+        #loading-image {
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body class="breakpoint-lg b--desktop" data-new-gr-c-s-check-loaded="14.1049.0" data-gr-ext-installed="">
+
+<!-- Body Inner -->
+<div class="body-inner">
+
+    <!-- Header -->
+    <header id="header">
+        <div class="header-inner">
+            <div class="container">
+                <!--Logo-->
+                <div id="logo">
+                    <a href="../index.html">
+                        <span class="logo-default">ETA</span><span class="logo-dark">ETA</span>
+                    </a>
+                </div>
+
+
+                <div id="search">
+                    <a id="btn-search-close" class="btn-search-close" aria-label="Close search form">
+                        <i class="icon-x"></i>
+                    </a>
+                    <form class="search-form" action="https://etapk.com/projects" method="get">
+                        <input class="form-control" name="q" type="text" placeholder="Type & Search..."/>
+                        <span class="text-muted">Start typing & press "Enter" or "ESC" to close</span>
+                    </form>
+                </div>
+                <div class="header-extras">
+                    <ul>
+                        <li>
+                            <a id="btn-search" href="#" style="display: inline"> <i
+                                    class="icon-search"></i></a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!--end: Header Extras-->
+                <!--Navigation Resposnive Trigger-->
+                <div id="mainMenu-trigger"><a class="lines-button x"><span class="lines"></span></a></div>
+                <!--end: Navigation Resposnive Trigger-->
+                <!--Navigation-->
+                <div id="mainMenu">
+                    <div class="container">
+                        <nav>
+                            <ul>
+                                <li><a href="../index.html">Home</a></li>
+                                <li class="dropdown"><a href="#">About ETA?</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-submenu"><a href="../vision.html">Vision
+                                                and
+                                                Mission</a></li>
+                                        <li class="dropdown-submenu"><a href="#">Objective Core Values</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="../coreValues.html">Core Values</a></li>
+                                                <li><a href="header-dark.html">Eta Standards</a></li>
+                                                <li><a href="header-transparent.html">Integrity</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu"><a href="#">Future Plan</a></li>
+                                        <li class="dropdown-submenu"><a href="#">ETA Policy</a></li>
+                                        <li class="dropdown-submenu"><a href="../termsConditions.html">Terms and
+                                                Conditions</a></li>
+                                        <li class="dropdown-submenu"><a
+                                                href="../privacyPolicy.html">Privacy
+                                                and Policy</a></li>
+                                        <li class="dropdown-submenu"><a
+                                                href="../policyReturns.html">Policy and
+                                                returns</a></li>
+                                        <li class="dropdown-submenu"><a href="../feeCharges.html">Fee
+                                                Charges</a></li>
+                                        
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#">Services</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-submenu"><a href="../whyEta.html">Why
+                                                ETA?</a>
+                                        </li>
+
+                                        <li class="dropdown-submenu">
+                                            <a href="../consultingServices.html">Consulting
+                                                Services</a>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href="../dataServices.html">Data Processing Services</a>
+                                        </li>
+                                        <li class="dropdown-submenu"><a
+                                                href="../monitoringServices.html">Monitoring
+                                                Services</a></li>
+                                        <li class="dropdown-submenu"><a
+                                                href="../educationalTest.html">Educational
+                                                Test</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        </li>
+                                        <li><a href="../professionalTest.html">Professional Test</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        </li>
+                                        <li class="dropdown-submenu"><a href="#">Trainings</a></li>
+                                    </ul>
+                                </li>
+
+
+                                <li class="dropdown"><a href="#">Projects</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-submenu"><a
+                                                href="../projects.html">Latest Projects</a>
+                                        </li>
+                                        <li class="dropdown-submenu"><a
+                                                href="working.html">On Going
+                                                Projects</a>
+                                        </li>
+                                        <li class="dropdown-submenu"><a
+                                                href="completed.html">Completed
+                                                Projects</a>
+                                        </li>
+
+                                        
+
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#" class="blink">Eligibility & Roll No's</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-submenu"><a href="../status/application-status.html"
+                                                                        class="blink">Application
+                                                Status</a>
+                                        </li>
+                                        <li class="dropdown-submenu"><a href="../status/blacklisting.html"
+                                                                        class="blink">Black Listing</a>
+                                        </li>
+                                        <li class="dropdown-submenu"><a href="../status/roll-status.html"
+                                                                        class="blink">Roll No's</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown"><a href="../status/result-status.html"
+                                                        class="blink">Results</a>
+                                    
+                                </li>
+                                
+                                <li class="dropdown"><a href="#">Contact Us</a>
+                                </li>
+
+                                <li class="dropdown"><a href="#">My Account</a>
+                                    <ul class="dropdown-menu">
+                                                                                    <li class="dropdown-submenu"><a href="../login.html">Login</a>
+                                            </li>
+                                            <li class="dropdown-submenu"><a
+                                                    href="../register.html">Register</a>
+                                            </li>
+                                                                                                                    </ul>
+                                </li>
+                                <li class="notification-nav">
+
+                                    <a href="#" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+
+                                        <i class="fa fa-bell">
+                                                <span
+                                                    class="position-absolute top-0 translate-middle badge rounded-pill bg-danger counting"
+                                                    style="margin-top: 10px;">
+                                                </span></i>
+                                    </a>
+                                    <ul class="dropdown-menu notification-dropdown">
+                                        <li class="head text-light bg-dark">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-12">
+                                                    <h5>Notifications (<span class="counting"></span>)</h5>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <div class="notificationsView">
+                                                                                    </div>
+                                        <li class="footer bg-dark text-center">
+                                            <a href="../notifications/all.html" class="text-light">View
+                                                All</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!--end: Navigation-->
+            </div>
+        </div>
+    </header>
+    <!-- end: Header -->
+    <div id="loading">
+        <img id="loading-image" src="../assets/loading.gif" alt="Loading..."/>
+    </div>
+    
+	<section id="page-content" class="sidebar-left">
+		<div class="container-fluid">
+			<div class="tabs tabs-vertical">
+				<div class="row">
+					<div class="sidebar col-lg-3">
+	<div class="widget row team-members">
+		<div class="col-lg-12">
+			<div class="team-member">
+				<div class="team-image" style="display: inline-flex">
+
+					
+						<img style="width: 44%; border-radius: 25px"
+						     src="../images/avatars/profile.png">
+						<br>
+						<br>
+						<a href="../login.html" class="btn btn-sm btn-rounded">Login</a>
+						<a href="../register.html" class="btn btn-sm btn-rounded">Register</a>
+
+									</div>
+			</div>
+		</div>
+	</div>
+	<div class="widget clearfix widget-archive">
+		<style>
+
+    .nav {
+        background-color: #46ACC2;
+        display: flex;
+        padding: 16px !important;
+        font-family: sans-serif;
+        color: white;
+    }
+
+    .nav-item {
+        background: #e4e6ef;
+        border: 1px solid white;
+    }
+
+    .nav-item > .active {
+        background: dodgerblue !important;
+        color: white !important;
+        border: 1px solid white !important;
+    }
+
+    /*RESPONSIVE NAVBAR MENU STARTS*/
+
+    /* CHECKBOX HACK */
+
+    #checkbox_toggle {
+
+        display: none;
+
+    }
+
+    /*HAMBURGER MENU*/
+
+    .hamburger {
+
+        display: none;
+        font-size: 24px;
+        user-select: none;
+
+
+    }
+
+    /* APPLYING MEDIA QUERIES */
+
+    @media (max-width: 768px) {
+
+        .menu {
+            display: none;
+        }
+
+        .notificationSection {
+            display: none;
+        }
+
+        #checkbox_toggle:checked ~ .menu {
+            display: block;
+				        margin:10px;
+        }
+
+        .hamburger {
+            align-self: flex-end;
+            display: initial;
+            position: absolute;
+            cursor: pointer;
+        }
+
+    }
+    @media (max-width: 992px) {
+
+        .menu {
+            display: none;
+        }
+
+        .notificationSection {
+            display: none;
+        }
+
+        #checkbox_toggle:checked ~ .menu {
+            display: block;
+				        margin:10px;
+        }
+
+        .hamburger {
+            align-self: flex-end;
+            display: initial;
+            position: absolute;
+            cursor: pointer;
+        }
+
+    }
+
+
+</style>
+<ul class="nav flex-column nav-tabs" role="tablist" aria-orientation="vertical">
+	<input type="checkbox" id="checkbox_toggle"/>
+	Profile Menu
+	<label for="checkbox_toggle" class="hamburger">&#9776;</label>
+
+	<!-- NAVIGATION MENUS -->
+
+	<div class="menu">
+		<li class="nav-item">
+			<a class=" nav-link" href="../login.html">Home</a>
+		</li>
+			</div>
+</ul>
+	</div>
+	<div class="widget clearfix widget-archive notificationSection" style="list-style: none; font-size: 12px">
+		<div class="widget-title text-center">
+			<h4 class="btn btn-rounded btn-danger" style="width: 100%">News Alerts</h4>
+		</div>
+		<marquee direction="up" scrollamount="2" height="300px" onmouseover="this.stop()" onmouseout="this.start()">
+			<div class="notificationsView">
+							</div>
+
+																	
+				<li class="notification-box blink dynamic" style="border-bottom: 1px solid; font-size: 12px !important;">
+					<div class="row" style="line-height: 20px; margin: 0px 2px">
+
+						<strong class="text-info"> Khyber Pakhtunkhwa Provincial Housing Authority (KP-PHA)</strong>
+																																						<a download href="../storage/project-files/18027/KPHA%202024%20JOBS%20Phase-1.pdf"
+									   class="btn btn-success btn-sm blink dynamic"
+									   style="float: right;  width: max-content;">KPHA ADD -2024/1</a>
+									<span class="tab"></span>
+																																								<a download href="../storage/project-files/18027/TEST%20SYLUBUS%20KPHA.pdf"
+									   class="btn btn-warning btn-sm blink dynamic"
+									   style="float: right;  width: max-content;">Test Syllabus</a>
+									<span class="tab"></span>
+																											
+																		<small class="badge text-info"
+						       style="text-align:right !important; font-size: 12px">12-10-2024 11:10:21 AM</small>
+					</div>
+				</li>
+
+											
+				<li class="notification-box blink dynamic" style="border-bottom: 1px solid; font-size: 12px !important;">
+					<div class="row" style="line-height: 20px; margin: 0px 2px">
+
+						<strong class="text-info"> University Of Veterinary &amp; Animal Sciences, Swat Khyber Pakhtunkhwa</strong>
+																																																													<a download href="../storage/project-files/18025/UVAS%2c%20Swat%20Add.pdf"
+									   class="btn btn-primary btn-sm blink dynamic"
+									   style="float: right;  width: max-content;">Advertisements</a>
+									<span class="tab"></span>
+																																																		
+																		<small class="badge text-info"
+						       style="text-align:right !important; font-size: 12px">14-09-2023 09:09:34 PM</small>
+					</div>
+				</li>
+
+					</marquee>
+	</div>
+
+</div>					<div class="content col-lg-9">
+						<div id="page-title" style="padding: 40px 0 !important;">
+													</div>
+												<div class="tab-pane fade show" id="apply-for-post" role="tabpanel"
+						     aria-labelledby="apply-for-post-tab">
+							<div class="card-header">
+								<span class="h4">Posts</span>
+							</div>
+							<div class="card-body">
+								<table  class="table" id="posts-table" style="width:100%"><thead><tr><th  title="#">#</th><th  title="Action" width="100">Action</th><th  title="Title">Title</th><th  title="Post Fees">Post Fees</th><th  title="NADRA E-Sahulat Fees">NADRA E-Sahulat Fees</th></tr></thead></table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4  col-lg-2 col-md-4">
+                        <!-- Footer widget area 1 -->
+                        <div class="widget  widget-contact-us"
+                             style="background-image: url('images/world-map-dark.html'); background-position: 50% 20px; background-repeat: no-repeat">
+                            <h4>About ETA</h4>
+                            <ul class="list-icon list-icon-bold">
+                                <li><i class="text-danger fa fa-map-marker-alt"></i> Office No 25, 2nd floor, Mall-09, <br>&nbsp;&nbsp;G-9 Markaz, Islamabad
+                                </li>
+                                <li><i class="text-success fab fa-whatsapp"></i> <a
+                                        href="https://api.whatsapp.com/send?phone=923344133382&amp;text=Welcome%20To%20ETA">+923344133382</a></li>
+                                <li><i class="text-primary fa fa-phone"></i> 051-8898883</li>
+                                <li><i class="text-info far fa-envelope"></i> <a
+                                        href="mailto:Info@etapk.com">Info@etapk.com
+                                    </a>
+                                </li>
+                                <li><i class="text-info far fa-envelope"></i> <a
+                                        href="mailto:queries@etapk.com">queries@etapk.com</a>
+                                </li>
+                                <li>
+                            </ul>
+
+                        </div>
+                        <!-- end: Footer widget area 1 -->
+                    </div>
+
+                    <div class="col-xl-2 col-lg-2 col-md-4">
+                        <!-- Footer widget area 1 -->
+                        <div class="widget">
+                            <h4>About Us</h4>
+                            <ul class="list">
+                                <li><a href="#">Our Story</a></li>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="#">Sponsors</a></li>
+                            </ul>
+
+                        </div>
+                        <!-- end: Footer widget area 1 -->
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-4">
+                        <!-- Footer widget area 2 -->
+                        <div class="widget">
+                            <h4>Our Terms</h4>
+                            <ul class="list">
+                                <li><a href="#">Terms and Conditions</a></li>
+                                <li><a href="#">Privacy and Policy</a></li>
+                                <li><a href="#">Policy and Returns</a></li>
+                                <li><a href="#">Fee Charges</a></li>
+                            </ul>
+                        </div>
+                        <!-- end: Footer widget area 2 -->
+                    </div>
+
+
+                    <div class="col-lg-4">
+                        <form class="widget-contact-form" novalidate="" action="https://etapk.com/projects/include/contact-form.php"
+                              role="form" method="post">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i
+                                                class="fa fa-user"></i></span>
+                                </div>
+                                <input type="text" aria-required="true" name="widget-contact-form-name"
+                                       class="form-control required name" placeholder="Enter your Name">
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i
+                                                class="fa fa-envelope"></i></span>
+                                </div>
+                                <input type="email" aria-required="true" required=""
+                                       name="widget-contact-form-email" class="form-control required email"
+                                       placeholder="Enter your Email">
+                            </div>
+                            <div class="form-group mb-2">
+                                    <textarea type="text" name="widget-contact-form-message" rows="5"
+                                              class="form-control required"
+                                              placeholder="Enter your Message"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit" id="form-submit"><i
+                                        class="fa fa-paper-plane"></i>&nbsp;Send message
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+
+
+                </div>
+                <div class="row flex-wrap">
+                    <div class="col-12 col-sm-6 col-md-3 mb-3 mb-sm-0">
+                        <a href="#">
+                            <img src="../images/logo/appstore.png" style="height:50px"
+                                 alt="Download From Apple Store">
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 text-sm-end text-md-start">
+                        <a href="https://play.google.com/store/apps/details?id=com.suleman.ntssalman">
+                            <img src="../images/logo/playstore.png" style="height:50px"
+                                 alt="Download From Play Store">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-content">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- Social icons -->
+                        <div class="social-icons social-icons-colored float-left">
+                            <ul>
+                                <li class="social-facebook"><a target="_blank"
+                                                               href="https://www.facebook.com/etestingagency"><i
+                                            class="fab fa-facebook-f"></i></a></li>
+                                <li class="social-youtube"><a target="_blank"
+                                                              href="https://www.youtube.com/channel/UCHZJt5aa5NxLtYpqeIWxVZA"><i
+                                            class="fab fa-youtube"></i></a></li>
+                                <li class="social-whatsapp"><a target="_blank"
+                                                               href="https://api.whatsapp.com/send?phone=923378901478&amp;text=Welcome%20To%20ETA"
+                                                               class="bg-success"><i class="fab fa-whatsapp"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- end: Social icons -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="copyright-text text-end">© 2021 Elegant Testing Agency. All Rights Reserved.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end: Footer -->
+</div>
+<!-- end: Body Inner -->
+
+<!-- Scroll top -->
+
+<a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+<!--Plugins-->
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/js/plugins.js"></script>
+<!--Template functions-->
+<script src="../assets/js/functions.js"></script>
+<script src="../js/vendors.min.js"></script>
+<script src="../js/datatables.min.js"></script>
+<script src="../js/select2.full.min.js"></script>
+<script src="../js/form-select2.min.js"></script>
+
+<script src="../js/front.js"></script>
+
+<link href="../../unpkg.com/filepond%404.32.6/dist/filepond.css" rel="stylesheet"/>
+<link href="../../unpkg.com/filepond-plugin-image-preview%404.6.12/dist/filepond-plugin-image-preview.css"
+      rel="stylesheet"/>
+<script src="../../apis.google.com/js/platform.js"></script>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+        src="../../connect.facebook.net/en_US/sdk.js#xfbml=1&version=v16.0&appId=481054275414885" nonce="MWeZBjTc">
+</script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'Access-Control-Allow-Headers': '*'
+        }
+    })
+    $(window).on('load', function () {
+        $('#loading').hide()
+    })
+
+
+    $(document).ready(function () {
+
+
+        notificationsTrigger()
+
+    })
+
+    function notificationsTrigger() {
+        $.ajax({
+            method: 'post',
+            url: 'https://etapk.com/notifications',
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function (res) {
+                if (res.status == 'ok') {
+                    $('.counting').text(res.total_count)
+                    $('.notificationsView').empty().append(res.view)
+                    return true
+                }
+                AdminApp.error(res.message)
+            },
+            error: function (res) {
+                AdminApp.ajaxError(res)
+
+            }
+        })
+    }
+
+    $('body').on('click', '.notification-link', function () {
+        let $el = $(this)
+        console.log($el.data('id'))
+        $.ajax({
+            method: 'post',
+            url: 'https://etapk.com/notifications/mark',
+            dataType: 'json',
+            data: {
+                id: $el.data('id')
+            },
+            success: function (res) {
+                location.href = $el.data('url')
+            },
+            error: function (res) {
+                AdminApp.ajaxError(res)
+            }
+        })
+    })
+
+    let pusher = new Pusher('fd21cf771ae29f649f85', {
+        cluster: 'eu',
+        encrypted: true
+    })
+    Pusher.logToConsole = true
+    let channel = pusher.subscribe('notifications')
+    channel.bind('NotificationChange', function () {
+        notificationsTrigger()
+    })
+</script>
+	<script src="../assets/plugins/datatables/datatables.min.js"></script>
+	<script src="http://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+	<script src="https://unpkg.com/imask"></script>
+	<script>
+   $(document).ready(function ($) {
+     let element = document.getElementById('cnic')
+     if (element != null) {
+       let maskOptions = {
+         mask: '00000-0000000-0'
+       }
+       IMask(element, maskOptions)
+     }
+
+     element = document.getElementById('phone_no')
+     if (element != null) {
+       let maskOptions = {
+         mask: '0000-0000000'
+       }
+       IMask(element, maskOptions)
+     }
+
+     element = document.getElementById('whatsapp_phone_no')
+     if (element != null) {
+       let maskOptions = {
+         mask: '0000-0000000'
+       }
+       IMask(element, maskOptions)
+     }
+
+   })
+	</script>
+	<script type="text/javascript">$(function(){window.LaravelDataTables=window.LaravelDataTables||{};window.LaravelDataTables["posts-table"]=$("#posts-table").DataTable({"serverSide":true,"processing":true,"ajax":{"url":"https:\/\/etapk.com\/projects\/header-dark.html","type":"GET","data":function(data) {
+            for (var i = 0, len = data.columns.length; i < len; i++) {
+                if (!data.columns[i].search.value) delete data.columns[i].search;
+                if (data.columns[i].searchable === true) delete data.columns[i].searchable;
+                if (data.columns[i].orderable === true) delete data.columns[i].orderable;
+                if (data.columns[i].data === data.columns[i].name) delete data.columns[i].name;
+            }
+            delete data.search.regex;}},"columns":[{"data":"DT_RowIndex","name":"DT_RowIndex","title":"#","orderable":false,"searchable":false},{"data":"action","name":"action","title":"Action","orderable":false,"searchable":false,"width":100},{"data":"title","name":"title","title":"Title","orderable":true,"searchable":true},{"data":"post_fees","name":"post_fees","title":"Post Fees","orderable":true,"searchable":true},{"data":"nadra_fee","name":"nadra_fee","title":"NADRA E-Sahulat Fees","orderable":true,"searchable":true}],"paging":false,"scrollX":true,"autoWidth":false,"dom":"<\"d-flex justify-content-between align-items-center mx-0 row\"<\"col-sm-12 col-md-6\"l><\"col-sm-12 col-md-6\"f>>t<\"d-flex justify-content-between mx-0 mb-1 row\"<\"col-sm-12 col-md-6\"i><\"col-sm-12 col-md-6\"p>>","order":[[0,"asc"]],"buttons":[{"extend":"print"}]});});
+</script>
+
+	<script>
+   let allPosts = null
+   $('body').on('click', '[data-action]', function () {
+     let $el = $(this)
+     $.ajax({
+       url: $el.attr('data-action'),
+       type: 'post',
+       dataType: 'json',
+       success: function (res) {
+         $('#post_id').html('')
+         if (res['posts'] != null && res['posts'].length > 0) {
+           allPosts = res['posts']
+           for (let i = 0; i < res['posts'].length; i++) {
+             let postId = res['posts'][i]
+             let postTitle = res['posts'][i]['title']
+             $('#post_id').append('<option value=' + postId + '>' + postTitle + '</option>')
+             $('#post-modal').modal('show')
+           }
+           showElementDetail(0)
+         }
+       },
+       error: function (err) {
+         console.error(err)
+       }
+     })
+   })
+
+   $('#post_id').change(function () {
+     let index = $(this).find('option:selected').index()
+     showElementDetail(index)
+   })
+
+   function showElementDetail (index) {
+     $('#postTitle').html(allPosts[index]['title'])
+     $('#postDescription').html(allPosts[index]['description'])
+     $('#postVacancies').html(allPosts[index]['vacancies'])
+   }
+	</script>
+	<script
+		src="../../cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
+	<script>
+	 $(document).ready(function () {
+
+		 $('.date').datepicker({
+			 format: 'dd-mm-yyyy'
+		 })
+
+	 })
+	</script>
+</body>
