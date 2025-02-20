@@ -68,12 +68,12 @@
                 </li>
 
                 <!-- Roll Number Slips -->
-                {{-- <li class="nav-item">
-                    <a href="{{ route('roll-number-slips.index') }}" class="nav-link {{ request()->routeIs('roll-number-slips.*') ? 'active' : '' }}">
+                <li class="nav-item">
+                    <a href="{{ route('rollnumber.index') }}" class="nav-link {{ request()->routeIs('rollnumber.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-id-card"></i>
                         <p>Roll Number Slips</p>
                     </a>
-                </li> --}}
+                </li>
 
                 <!-- Results -->
                 <li class="nav-item">
@@ -187,8 +187,8 @@
                 </li> --}}
 
 
-                <li class="nav-item has-treeview {{ Request::is('corevalues*', 'pages*', 'ourservices*') ? 'menu-open' : '' }}">
-    <a href="#" class="nav-link {{ Request::is('corevalues*', 'pages*', 'ourservices*') ? 'active' : '' }}">
+                <li class="nav-item has-treeview {{ Request::is('corevalues*', 'pages*', 'ourservices*','trems*') ? 'menu-open' : '' }}">
+    <a href="#" class="nav-link {{ Request::is('corevalues*', 'pages*', 'ourservices*','trems*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-cogs"></i>
         <p>
            Others Settings
@@ -209,6 +209,14 @@
             <a href="{{ route('pages.index') }}" class="nav-link {{ request()->routeIs('pages.index') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Pages</p>
+            </a>
+        </li>
+
+          <!-- Pages -->
+        <li class="nav-item">
+            <a href="{{ route('trems.index') }}" class="nav-link {{ request()->routeIs('trems.index') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Trems Pages</p>
             </a>
         </li>
 

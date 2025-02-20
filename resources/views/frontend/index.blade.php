@@ -33,20 +33,21 @@
         <h2>Short Links</h2>
     </div>
     <div class="row py-4">
-        <div class="col-6 col-md-3 mb-4 mb-md-0">
+        {{-- <div class="col-6 col-md-3 mb-4 mb-md-0">
             <div class="CardBox">
-                <a target="_blank" href="projects.html">
+                <a target="_blank" href="{{route('projects')}}">
                     <div class="boxColorN">
                         <img src="{{ asset('frontend/icons/project.png')}}" width="90px" height="90px" alt="New Projects">
-                        <div class="para-text">New Projects</div>
                     </div>
+                        <div class="para-text">New Projects</div>
+
 
                 </a>
             </div>
-        </div>
+        </div> --}}
         <div class="col-6 col-md-3 mb-4 mb-md-0">
             <div class="CardBox">
-                <a target="_blank" href="projects/working.html">
+                <a target="_blank" href="{{route('projects')}}">
                     <div class="boxColorN">
                         <img src="{{ asset('frontend/icons/ongoing.png')}}" width="90px" height="90px" alt="New Projects">
                     </div>
@@ -56,7 +57,7 @@
         </div>
         <div class="col-6 col-md-3 mb-4 mb-md-0">
             <div class="CardBox">
-                <a target="_blank" href="projects/completed.html">
+                <a target="_blank" href="{{route('projects')}}">
                     <div class="boxColorN">
                         <img src="{{ asset('frontend/icons/completed.png')}}" width="90px" height="90px" alt="New Projects">
                     </div>
@@ -64,7 +65,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-6 col-md-3 mb-4 mb-md-0">
+        {{-- <div class="col-6 col-md-3 mb-4 mb-md-0">
             <div class="CardBox">
                 <a target="_blank" href="status/application-status.html">
                     <div class="boxColorN">
@@ -73,10 +74,10 @@
                     <div class="para-text">Application Status</div>
                 </a>
             </div>
-        </div>
+        </div> --}}
         <div class="col-6 col-md-3 mb-4 mb-md-0">
             <div class="CardBox">
-                <a target="_blank" href="status/roll-status.html">
+                <a target="_blank" href="{{route('roll-number-slip.index')}}">
                     <div class="boxColorN">
                         <img src="{{ asset('frontend/icons/roll.png')}}" width="90px" height="90px" alt="Roll Numbers">
                     </div>
@@ -86,7 +87,7 @@
         </div>
         <div class="col-6 col-md-3 mb-4 mb-md-0">
             <div class="CardBox">
-                <a target="_blank" href="status/result-status.html">
+                <a target="_blank" href="{{route('candidate_result.result')}}">
                     <div class="boxColorN">
                         <img src="{{ asset('frontend/icons/result.png')}}" width="90px" height="90px" alt="Results">
                     </div>
@@ -269,7 +270,7 @@
                         <a href="{{ route('postsjob.show', $post->id) }}" class="btn btn-warning btn-sm dynamic" style="float: right;  width: max-content; margin-right: 2px">Apply Now </a>
                         @endif
                         <span class="tab"></span>
-                        <a href="applicationStatuses/khyber-pakhtunkhwa-provincial-housing-authority-kp-pha.html" class="btn btn-primary btn-sm  dynamic" style="float: right; width: max-content; color: black; background: yellow">Application
+                        <a href="#" class="btn btn-primary btn-sm  dynamic" style="float: right; width: max-content; color: black; background: yellow">Application
                             Status</a>
                         <span class="tab"></span>
                     </div>

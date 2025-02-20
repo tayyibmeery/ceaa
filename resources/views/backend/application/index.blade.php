@@ -517,7 +517,7 @@
 </td>
 
                                             <td>
-                                                <a href="{{ route('applications.show', $application->id) }}" class="btn btn-info btn-sm">View</a>
+                                                {{-- <a href="{{ route('applications.show', $application->id) }}" class="btn btn-info btn-sm">View</a> --}}
                                                 <a href="{{ route('applications.edit', $application->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                 <form action="{{ route('applications.destroy', $application->id) }}" method="POST" style="display: inline;">
                                                     @csrf

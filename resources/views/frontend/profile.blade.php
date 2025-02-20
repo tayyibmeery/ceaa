@@ -307,16 +307,16 @@
                                 <ul class="text-muted mb-0">
                                     @if (!empty(auth()->user()->applications))
                                     @foreach(auth()->user()->applications as $application)
-                                    {{-- @if($application->tests->isNotEmpty())
-                                    @foreach($application->tests as $test)
+                                    @if($application->tests)
+                                    {{-- @foreach($application->tests as $test) --}}
                                     <li>
-                                        <strong>{{ $test->test_id }}</strong> - Test Date: {{ $test->test_date->format('d M Y') }}<br>
-                                    Center: {{ $test->test_center }} | Time: {{ $test->test_time }}
+                                        <strong>{{  $application->jobPost->title  }}</strong> - Test Date: {{ $application->tests->test_date }}<br>
+                                    Center: {{ $application->tests->test_center }} | Time: {{ $application->tests->test_time }}
                                     </li>
-                                    @endforeach
+                                    {{-- @endforeach --}}
                                     @else
                                     <li>No tests scheduled for this application.</li>
-                                    @endif --}}
+                                    @endif
                                     @endforeach
                                     @else
                                     <li>No applications found.</li>

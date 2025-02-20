@@ -139,7 +139,7 @@
                     <td>{{ $test->test_time }}</td>
                     <td>{{ $test->test_center }}</td>
                     <td>
-                      <a href="{{ route('tests.show', $test->id) }}" class="btn btn-info btn-sm">View</a>
+                      {{-- <a href="{{ route('tests.show', $test->id) }}" class="btn btn-info btn-sm">View</a> --}}
                       <a href="{{ route('tests.edit', $test->id) }}" class="btn btn-warning btn-sm">Edit</a>
                       <form action="{{ route('tests.destroy', $test->id) }}" method="POST" style="display: inline;">
                         @csrf

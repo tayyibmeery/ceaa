@@ -8,7 +8,7 @@ use App\Models\JobPost;
 use App\Models\OurService;
 use App\Models\Page;
 use App\Models\Slider;
-
+use App\Models\Trem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -20,41 +20,35 @@ class FrontEndController extends Controller
     $lights=Highlight::all();
         $posts = JobPost::active(5)->get();
 
-        return view('frontend\index',\compact('slider','lights', 'posts'));
+        return view('frontend.index',\compact('slider','lights', 'posts'));
  }
 
     public function vision()
     {
         $cores=CoreValue::all();
-        return view('frontend\vision', \compact('cores'));
+        return view('frontend.vision', \compact('cores'));
     }
 
     public function servises()
     {
         $ourservise=OurService::all();
-        return view('frontend\servises', \compact('ourservise'));
+        return view('frontend.servises', \compact('ourservise'));
     }
     public function projects()
     {
         $posts=JobPost::active(5)->get();
-        return view('frontend\project' ,\compact('posts'));
+        return view('frontend.project' ,\compact('posts'));
     }
 
     public function applicationstatus(){
-        return view('frontend\applicationstatus');
+        return view('frontend.applicationstatus');
     }
 
 
 
 
-    public function roll_slip()
-    {
-        return view('frontend\roll_slip');
-    }
-    public function candidate_results()
-    {
-        return view('frontend\result');
-    }
+
+   
 
 
 
@@ -64,6 +58,12 @@ class FrontEndController extends Controller
         return view('frontend.plans', compact('page'));
     }
 
+    public function ourtrem($slug)
+    {
+        $trem = Trem::where('slug', $slug)->firstOrFail();
+        return view('frontend.ourtrem', compact('trem'));
+    }
+
 
 
 
@@ -71,7 +71,7 @@ class FrontEndController extends Controller
     {
 
         $candidate = Auth::user();
-        $posts = JobPost::active(5)->get();
+        $posts = JobPost::active(5)->orderBy('created_at', 'desc')->get();
 
 
         return view('frontend.profile', compact('candidate', 'posts'));
@@ -81,7 +81,7 @@ class FrontEndController extends Controller
     public function profileedit()
     {
         // Retrieve the currently authenticated user's profile for editing
-        $candidate = Auth::user();
+        $candidate = Auth::user()->orderBy('id', 'desc');
 
         // Return the edit profile view with the current data
         return view('frontend.edit', compact('candidate'));

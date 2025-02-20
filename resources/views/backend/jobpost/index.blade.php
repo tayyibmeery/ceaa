@@ -66,7 +66,7 @@
                   <td>{{ $jobPost->is_visible ? 'Visible' : 'Hidden' }}</td>
 
                     <td>
-                      <a href="{{ route('job-posts.show', $jobPost->id) }}" class="btn btn-info btn-sm">View</a>
+                      {{-- <a href="{{ route('job-posts.show', $jobPost->id) }}" class="btn btn-info btn-sm">View</a> --}}
                       <a href="{{ route('job-posts.edit', $jobPost->id) }}" class="btn btn-warning btn-sm">Edit</a>
                       <form action="{{ route('job-posts.destroy', $jobPost->id) }}" method="POST" style="display: inline;">
                         @csrf

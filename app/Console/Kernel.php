@@ -12,7 +12,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('generate:roll-number-slips')->daily();
+        // $schedule->command('generate:roll-number-slips')->daily();
+        // $schedule->command('jobpost:update-status')->hourly();
+        $schedule->command('jobpost:update-status')->daily();
+        // $schedule->command('jobpost:update-status')->daily()->environments(['local']);
     }
 
     /**

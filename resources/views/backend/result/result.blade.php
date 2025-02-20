@@ -22,15 +22,31 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
+
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Upload & Export Results</h3>
+            <div class=" text-right">
+        <a href="{{ route('results.export') }}" class="btn btn-success">Export Results</a>
+      </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
+            @if ($errors->any())
+              <div class="alert alert-danger">
+                  <strong>There were some errors:</strong>
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+            @endif
+
             @if(session('success'))
               <div class="alert alert-success">{{ session('success') }}</div>
             @endif
+
             <form action="{{ route('results.upload') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
@@ -39,8 +55,14 @@
               </div>
               <button type="submit" class="btn btn-primary">Upload</button>
             </form>
+
             <hr>
-            <a href="{{ route('results.export') }}" class="btn btn-success">Export Results</a>
+
+            <div class="text-right">
+              
+              <a href="{{ route('results.index') }}" class="btn btn-secondary">Back</a>
+            </div>
+
           </div>
           <!-- /.card-body -->
         </div>

@@ -8,8 +8,8 @@
                      {{-- <span class="logo-default">CEAA</span>
                      <span class="logo-dark">CEAA</span>
                       --}}
-<img class="logo-default" src="{{ asset('frontend\images\logo.png') }}" alt="CEAA Logo" style="max-height: 50px;">
-<img class="logo-dark" src="{{ asset('frontend\images\logo.png') }}" alt="CEAA Logo" style="max-height: 50px; display: none;">
+                     <img class="logo-default" src="{{ asset('frontend\images\logo.png') }}" alt="CEAA Logo" style="max-height: 50px;">
+                     <img class="logo-dark" src="{{ asset('frontend\images\logo.png') }}" alt="CEAA Logo" style="max-height: 50px; display: none;">
                  </a>
              </div>
 
@@ -44,17 +44,18 @@
                              <li class="dropdown"><a href="#">About CEAA?</a>
                                  <ul class="dropdown-menu">
                                      <li class="dropdown-submenu"><a href="{{route('vision')}}">Vision & Core Values</a></li>
-                                      @foreach (App\Models\Page::all() as $page)
-                                         <li class="dropdown-submenu"><a href="{{ url('page/'.$page->slug) }}">{{ $page->name }}</a></li>
-                                        {{-- <li><a href="{{ url('page/'.$page->slug) }}">{{ $page->name }}</a></li> --}}
-                                    @endforeach
-                                     {{-- <li class="dropdown-submenu"><a href="{{route('plans')}}">Plans & Policies</a></li>
-                                     <li class="dropdown-submenu"><a href="{{route('fees')}}">Returns & Fees</a></li> --}}
+                                     @foreach (App\Models\Page::all() as $page)
+                                     <li class="dropdown-submenu"><a href="{{ url('page/'.$page->slug) }}">{{ $page->name }}</a></li>
+                                     {{-- <li><a href="{{ url('page/'.$page->slug) }}">{{ $page->name }}</a>
+                             </li> --}}
+                             @endforeach
+                             {{-- <li class="dropdown-submenu"><a href="{{route('plans')}}">Plans & Policies</a></li>
+                             <li class="dropdown-submenu"><a href="{{route('fees')}}">Returns & Fees</a></li> --}}
 
-                                 </ul>
-                             </li>
-                             <li class="dropdown"><a href="{{route('servises')}}">Services</a>
-                                 {{-- <ul class="dropdown-menu">
+                         </ul>
+                         </li>
+                         <li class="dropdown"><a href="{{route('servises')}}">Services</a>
+                             {{-- <ul class="dropdown-menu">
                                      <li class="dropdown-submenu"><a href="whyEta.html">Why
                                              CEAA?</a>
                                      </li>
@@ -99,11 +100,11 @@
                                      </li>
                                      <li class="dropdown-submenu"><a href="#">Trainings</a></li>
                                  </ul> --}}
-                             </li>
+                         </li>
 
 
-                             <li class="dropdown"><a href="{{route('projects')}}">Projects</a>
-                                 {{-- <ul class="dropdown-menu">
+                         <li class="dropdown"><a href="{{route('projects')}}">Projects</a>
+                             {{-- <ul class="dropdown-menu">
                                      <li class="dropdown-submenu"><a href="projects.html">Latest Projects</a>
                                      </li>
                                      <li class="dropdown-submenu"><a href="projects/working.html">On Going
@@ -116,53 +117,64 @@
 
 
                                  </ul> --}}
-                             </li>
-                             <li class="dropdown"><a href="#" class="blink">Eligibility & Roll No's</a>
+                         </li>
+                         <li class="dropdown"><a href="{{route('roll-number-slip.index')}}" class="blink"> Roll No's</a>
+                             {{-- <ul class="dropdown-menu">
+                                  <li class="dropdown-submenu"><a href="{{route('applicationstatus')}}" class="blink">Application
+                                         Status</a>
+                                 </li>
+                                 <li class="dropdown-submenu"><a href="status/blacklisting.html" class="blink">Black Listing</a>
+                                     </li>
+                                 <li class="dropdown-submenu"><a href="{{route('roll-number-slip.index')}}" class="blink">Roll No's</a>
+
+                                 </li>
+                             </ul> --}}
+                         </li>
+
+                         <li class="dropdown"><a href="{{route('candidate_result.result')}}" class="blink">Results</a>
+
+                         </li>
+
+                         {{-- <li class="dropdown"><a href="#">Contact Us</a>
+                         </li> --}}
+
+                            <li class="dropdown"><a href="#">Our Terms</a>
                                  <ul class="dropdown-menu">
-                                     <li class="dropdown-submenu"><a href="{{route('applicationstatus')}}" class="blink">Application
-                                             Status</a>
-                                     </li>
-                                     {{-- <li class="dropdown-submenu"><a href="status/blacklisting.html" class="blink">Black Listing</a>
-                                     </li> --}}
-                                     <li class="dropdown-submenu"><a href="{{route('roll_slip')}}" class="blink">Roll No's</a>
 
-                                     </li>
+                                     @foreach (App\Models\Trem::all() as $trems)
+                                     <li class="dropdown-submenu"><a href="{{ url('trems/'.$trems->slug) }}">{{ $trems->name }}</a></li>
+                                     {{-- <li><a href="{{ url('page/'.$page->slug) }}">{{ $page->name }}</a>
+                             </li> --}}
+                             @endforeach
                                  </ul>
-                             </li>
+                            </li>
+                         <li class="dropdown">
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
+                             <ul class="dropdown-menu">
+                                 @auth
+                                 <!-- For logged-in users -->
+                                 <li><a href="{{ route('profile') }}">Profile</a></li>
+                                 <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                     @csrf
+                                 </form>
+                                 @else
+                                 <!-- For guests (users not logged in) -->
+                                 <li><a href="{{ route('login') }}">Login</a></li>
+                                 <li><a href="{{ route('register') }}">Register</a></li>
+                                 @endauth
+                             </ul>
+                         </li>
 
-                             <li class="dropdown"><a href="{{route('candidate.results')}}" class="blink">Results</a>
-
-                             </li>
-
-                             <li class="dropdown"><a href="#">Contact Us</a>
-                             </li>
-<li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
-    <ul class="dropdown-menu">
-        @auth
-            <!-- For logged-in users -->
-            <li><a href="{{ route('profile') }}">Profile</a></li>
-            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        @else
-            <!-- For guests (users not logged in) -->
-            <li><a href="{{ route('login') }}">Login</a></li>
-            <li><a href="{{ route('register') }}">Register</a></li>
-        @endauth
-    </ul>
-</li>
-
-                             {{-- <li class="dropdown"><a href="#">My Account</a>
+                         {{-- <li class="dropdown"><a href="#">My Account</a>
                                  <ul class="dropdown-menu">
                                      <li class="dropdown-submenu"><a href="{{route('login')}}">Login</a>
-                                     </li>
-                                     <li class="dropdown-submenu"><a href="{{route('register')}}">Register</a>
-                                     </li>
-                                 </ul>
-                             </li> --}}
-                             {{-- <li class="notification-nav">
+                         </li>
+                         <li class="dropdown-submenu"><a href="{{route('register')}}">Register</a>
+                         </li>
+                         </ul>
+                         </li> --}}
+                         {{-- <li class="notification-nav">
 
                                  <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 

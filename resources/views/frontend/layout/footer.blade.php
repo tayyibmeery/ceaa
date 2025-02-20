@@ -51,9 +51,11 @@
                         <div class="widget">
                             <h4>About Us</h4>
                             <ul class="list">
-                                <li><a href="#">Our Story</a></li>
-                                <li><a href="#">FAQ</a></li>
-                                <li><a href="#">Sponsors</a></li>
+                                <li><a href="{{route('vision')}}">Core Values</a></li>
+                                @foreach (App\Models\Page::all() as $page)
+
+                                 <li><a href="{{ url('page/'.$page->slug) }}">{{ $page->name }}</a></li>
+                                 @endforeach
                             </ul>
 
                         </div>
@@ -64,10 +66,10 @@
                         <div class="widget">
                             <h4>Our Terms</h4>
                             <ul class="list">
-                                <li><a href="#">Terms and Conditions</a></li>
-                                <li><a href="#">Privacy and Policy</a></li>
-                                <li><a href="#">Policy and Returns</a></li>
-                                <li><a href="#">Fee Charges</a></li>
+                              @foreach (App\Models\Trem::all() as $trem)
+
+                                 <li><a href="{{ url('ourtrem/'.$trem->slug) }}">{{ $trem->name }}</a></li>
+                                 @endforeach
                             </ul>
                         </div>
                         <!-- end: Footer widget area 2 -->
@@ -149,7 +151,7 @@
                         <!-- end: Social icons -->
                     </div> --}}
                     <div class="col-lg-12">
-                        <div class="copyright-text text-center">© 2021 Elegant Testing Agency. All Rights Reserved.
+                        <div class="copyright-text text-center">© 2025 CEAA. All Rights Reserved.
                         </div>
                     </div>
                 </div>

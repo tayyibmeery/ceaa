@@ -1,11 +1,44 @@
-@extends('frontend.layout.main')
-
-@section('title', 'Result Details')
-
-@section('content')
-
-<section class="d-flex justify-content-center align-items-center py-5">
-    <div class="container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roll Number Slip</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .header p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        .details {
+            margin-top: 30px;
+        }
+        .details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .details table td {
+            padding: 8px;
+            border: 1px solid #000;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
                 <div class="card shadow-lg p-4">
@@ -46,30 +79,8 @@
                 </div>
             </div>
         </div>
+       <div class="footer">
+        <p>Thank you for using our system. Best of luck for your test!</p>
     </div>
-</section>
-
-@endsection
-
-@push('styles')
-<style>
-    .card {
-        border-radius: 10px;
-        background: #61d874;
-    }
-    .list-group-item {
-        background: white;
-        font-size: 16px;
-    }
-    .btn-success {
-        display: block;
-        margin: 10px auto;
-    }
-</style>
-@endpush
-
-@push('scripts')
-<script>
-    // Optional: Add any JavaScript logic if needed
-</script>
-@endpush
+</body>
+</html>

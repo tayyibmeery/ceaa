@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Jobs\GenerateRollNumberSlips;
 class Test extends Model
 {
     use HasFactory;
@@ -17,5 +17,18 @@ class Test extends Model
     public function rollNumberSlips()
     {
         return $this->hasMany(RollNumberSlip::class);
+    }
+
+
+
+    protected static function booted()
+    {
+        static::created(function ($test) {
+            GenerateRollNumberSlips::dispatch($test);
+        });
+
+        static::updated(function ($test) {
+            GenerateRollNumberSlips::dispatch($test);
+        });
     }
 }

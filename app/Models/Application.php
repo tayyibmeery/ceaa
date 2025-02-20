@@ -36,7 +36,7 @@ class Application extends Model
     {
         return $this->hasOne(RollNumberSlip::class);
     }
-    public function test()
+    public function tests()
     {
         return $this->hasOne(Test::class, 'job_post_id', 'job_post_id');
     }

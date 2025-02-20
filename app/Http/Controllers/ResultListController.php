@@ -11,20 +11,9 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ResultListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
 
-    public function showResult($id)
-    {
-        $application = Application::with('candidate', 'jobPost.organization')->findOrFail($id);
 
-        if (!$application->result) {
-            return redirect()->back()->with('error', 'Result not declared yet.');
-        }
-
-        return view('backend.result.show', compact('application'));
-    } public function index()
+    public function index()
     {
         // Fetch all results
         $results = Result::all();
@@ -100,11 +89,15 @@ public function results() {
             'file' => 'required|mimes:xlsx,csv',
         ]);
 
-        Excel::import(new ResultsImport, $request->file('file'));
+        $import = new ResultsImport();
+        Excel::import($import, $request->file('file'));
 
-        return redirect()->back()->with('success', 'Results uploaded successfully.');
+        if (!empty($import->errors)) {
+            return back()->withErrors($import->errors); // Return errors to the user
+        }
+
+        return back()->with('success', 'Results imported successfully!');
     }
-
     public function exportResults()
     {
         return Excel::download(new ResultsExport, 'results.xlsx');

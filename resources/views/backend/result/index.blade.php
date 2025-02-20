@@ -34,24 +34,36 @@
             <table id="resultsTable" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Application ID</th>
-                  <th>Marks Obtained</th>
-                  <th>Total Marks</th>
-                  <th>Remarks</th>
-                  <th>Actions</th>
+                    <th>ID</th>
+            <th>Applicant Name</th>
+            <th> Job Organization Name</th>
+            <th> Roll No</th>
+            <th>Job Post</th>
+            <th>Test Date</th>
+            <th>Test Center</th>
+            <th>CNIC</th>
+            <th>Marks Obtained</th>
+            <th>Total Marks</th>
+            <th>Remarks</th>
+            <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($results as $result)
                   <tr>
                     <td>{{ $result->id }}</td>
-                    <td>{{ $result->application_id }}</td>
+                    <td>{{ $result->application->user->first_name }} {{ $result->application->user->last_name }} S/O {{ $result->application->user->father_name }}</td>
+                    <td>{{ $result->application->jobPost->organization_name }}</td>
+                    <td>{{ $result->application->rollNumberSlip->roll_number }}</td>
+                    <td>{{ $result->application->jobPost->title }}</td>
+                    <td>{{ $result->application->tests->test_date }}</td>
+                    <td>{{ $result->application->tests->test_center }}</td>
+                    <td>{{ $result->application->user->cnic }}</td>
                     <td>{{ $result->marks_obtained }}</td>
                     <td>{{ $result->total_marks }}</td>
                     <td>{{ $result->remarks }}</td>
                     <td>
-                      <a href="{{ route('results.show', $result->id) }}" class="btn btn-info btn-sm">View</a>
+                      {{-- <a href="{{ route('results.show', $result->id) }}" class="btn btn-info btn-sm">View</a> --}}
                       <a href="{{ route('results.edit', $result->id) }}" class="btn btn-warning btn-sm">Edit</a>
                       <form action="{{ route('results.destroy', $result->id) }}" method="POST" style="display: inline;">
                         @csrf
