@@ -142,7 +142,7 @@
                                  <ul class="dropdown-menu">
 
                                      @foreach (App\Models\Trem::all() as $trems)
-                                     <li class="dropdown-submenu"><a href="{{ url('trems/'.$trems->slug) }}">{{ $trems->name }}</a></li>
+                                     <li class="dropdown-submenu"><a href="{{ url('ourtrem/'.$trems->slug) }}">{{ $trems->name }}</a></li>
                                      {{-- <li><a href="{{ url('page/'.$page->slug) }}">{{ $page->name }}</a>
                              </li> --}}
                              @endforeach
