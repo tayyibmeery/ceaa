@@ -6,6 +6,7 @@ use App\Models\JobPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -15,10 +16,10 @@ class ProfileController extends Controller
 
         $candidate = Auth::user();
         $posts =
-        JobPost::active(5)
-        ->where('application_deadline', '>', now()) // Ensure the application deadline is in the future
-        ->orderBy('application_deadline', 'asc')  // Order by the application deadline in ascending order
-        ->get();
+            JobPost::active(5)
+            ->where('application_deadline', '>', now()) // Ensure the application deadline is in the future
+            ->orderBy('application_deadline', 'asc')  // Order by the application deadline in ascending order
+            ->get();
 
 
         return view('frontend.profile', compact('candidate', 'posts'));
@@ -37,57 +38,102 @@ class ProfileController extends Controller
     // Update Profile Method
     public function profileupdate(Request $request)
     {
-        // Validate the input data
         $validated = $request->validate([
-            'first_name' => 'required|string|max:255',  // Full Name is required and a string
-            'last_name' => 'nullable|string|max:255',  // Full Name is required and a string
-            'father_name' => 'nullable|string|max:255',  // Full Name is required and a string
-            'cnic' => 'nullable|string|unique:users,cnic|max:15|regex:/^\d{5}-\d{7}-\d{1}$/',
-
-            'date_of_birth' => 'nullable|date',  // Date of Birth is optional but must be a valid date
-            'phone' => 'nullable|string|max:15',  // Phone number is optional with max length of 15
-            'address' => 'nullable|string',  // Address is optional
-            'province_of_domicile' => 'nullable|string|max:255',  // Province of Domicile is optional, max length 255
-            'district_of_domicile' => 'nullable|string|max:255',  // District of Domicile is optional, max length 255
-            'postal_city' => 'nullable|string|max:255',  // Postal City is optional, max length 255
-            'postal_address' => 'nullable|string',  // Postal Address is optional
-            'gender' => 'nullable|in:male,female,other',  // Gender is optional, must be one of the predefined options
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',  // Profile Picture is optional, but if provided, must be an image of a specific type and within size limit
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'father_name' => 'required|string|max:255',
+            'date_of_birth' => 'required|date|before:today',
+            'gender' => 'required|in:male,female,other',
+            'cnic' => ['required', 'string', 'max:15', 'regex:/^\d{5}-\d{7}-\d{1}$/'],
+            'phone' => ['required', 'string', 'max:20', 'regex:/^[0-9\-\+]{9,15}$/'],
+            'address' => 'required|string',
+            'province_of_domicile' => 'required|string|max:255',
+            'district_of_domicile' => 'required|string|max:255',
+            'postal_city' => 'required|string|max:255',
+            'postal_address' => 'required|string',
+            'password' => 'nullable|min:8|confirmed',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            // Education validation
+            'educations' => 'nullable|array',
+            'educations.*.degree_title' => 'required|string|max:255',
+            'educations.*.institute' => 'required|string|max:255',
+            'educations.*.board_university' => 'required|string|max:255',
+            'educations.*.passing_year' => 'required|integer|min:1950|max:' . (date('Y')),
+            'educations.*.grade_cgpa' => 'required|string|max:10',
+        ], [
+            // Custom validation messages
+            'cnic.regex' => 'The CNIC must be in format: XXXXX-XXXXXXX-X',
+            'phone.regex' => 'Please enter a valid phone number',
+            'date_of_birth.before' => 'Date of birth must be a date before today',
+            'educations.*.degree_title.required' => 'The degree title field is required',
+            'educations.*.passing_year.min' => 'Please enter a valid passing year',
+            'educations.*.passing_year.max' => 'Passing year cannot be in the future',
         ]);
 
-        // Retrieve the currently authenticated user's profile (candidate)
-        $candidate = Auth::user();
+        try {
+            \DB::beginTransaction();
 
-        // Update the candidate profile information
-        $candidate->first_name = $validated['first_name'];
-        $candidate->last_name = $validated['last_name'];
-        $candidate->father_name = $validated['father_name'];
-        $candidate->phone = $validated['phone'];
-        $candidate->address = $validated['address'];
-        $candidate->province_of_domicile = $validated['province_of_domicile'];
-        $candidate->district_of_domicile = $validated['district_of_domicile'];
-        $candidate->postal_city = $validated['postal_city'];  // Add postal_city to the candidate
-        $candidate->postal_address = $validated['postal_address'];  // Add postal_address to the candidate
-        $candidate->gender = $validated['gender'];
-        $candidate->date_of_birth = $validated['date_of_birth'];  // Update date_of_birth if provided
-        $candidate->cnic = $validated['cnic'];  // Update CNIC if provided
+            $user = Auth::user();
 
-        // Handle profile picture upload if present
-        if ($request->hasFile('profile_picture')) {
-            // Delete old profile picture if it exists
-            if ($candidate->profile_picture) {
-                Storage::disk('public')->delete($candidate->profile_picture);
+            // Update basic info
+            $user->first_name = $validated['first_name'];
+            $user->last_name = $validated['last_name'];
+            $user->father_name = $validated['father_name'];
+            $user->date_of_birth = $validated['date_of_birth'];
+            $user->gender = $validated['gender'];
+            $user->cnic = $validated['cnic'];
+            $user->phone = $validated['phone'];
+            $user->address = $validated['address'];
+            $user->province_of_domicile = $validated['province_of_domicile'];
+            $user->district_of_domicile = $validated['district_of_domicile'];
+            $user->postal_city = $validated['postal_city'];
+            $user->postal_address = $validated['postal_address'];
+
+            // Update password if provided
+            if ($request->filled('password')) {
+                $user->password = Hash::make($validated['password']);
             }
 
-            // Store the new profile picture
-            $imagePath = $request->file('profile_picture')->store('profile_pictures', 'public');
-            $candidate->profile_picture = $imagePath;
+            // Handle profile picture upload
+            if ($request->hasFile('profile_picture')) {
+                if ($user->profile_picture) {
+                    Storage::disk('public')->delete($user->profile_picture);
+                }
+                $imagePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+                $user->profile_picture = $imagePath;
+            }
+
+            $user->save();
+
+            // Handle education records
+            if (isset($validated['educations'])) {
+                // Delete existing education records
+                $user->educations()->delete();
+
+                // Create new education records
+                foreach ($validated['educations'] as $educationData) {
+                    $user->educations()->create([
+                        'degree_title' => $educationData['degree_title'],
+                        'institute' => $educationData['institute'],
+                        'board_university' => $educationData['board_university'],
+                        'passing_year' => $educationData['passing_year'],
+                        'grade_cgpa' => $educationData['grade_cgpa'],
+                    ]);
+                }
+            }
+
+            \DB::commit();
+            return redirect()->route('profile')->with('success', 'Your profile has been updated successfully!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \DB::rollback();
+            return back()->withErrors($e->errors())
+                ->withInput()
+                ->with('error', 'Please check the form for errors and try again.');
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return back()
+                ->with('error', 'An unexpected error occurred. Please try again later.')
+                ->withInput();
         }
-
-        // Save the updated candidate information
-        $candidate->save();
-
-        // Redirect to profile with success message
-        return redirect()->route('profile')->with('success', 'Profile updated successfully!');
     }
 }

@@ -85,4 +85,9 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Result::class, Application::class, 'user_id', 'application_id');
     }
+
+    public function educations()
+    {
+        return $this->hasMany(Education::class);
+    }
 }
