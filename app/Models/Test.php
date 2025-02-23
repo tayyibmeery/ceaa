@@ -5,10 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Jobs\GenerateRollNumberSlips;
+
 class Test extends Model
 {
     use HasFactory;
+
     protected $fillable = ['job_post_id', 'test_date', 'test_time', 'test_center'];
+
+    protected $casts = [
+        'test_date' => 'datetime',
+    ];
 
     public function jobPost()
     {

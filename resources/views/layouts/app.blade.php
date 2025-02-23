@@ -30,6 +30,8 @@
                 <div class="row">
                     <div class="col-lg-5 center p-50 background-white b-r-6">
                         <h3>Login to your Account</h3>
+
+
                         @yield('content')
                         <p class="small">Don't have an account yet? <a href="{{ route('register') }}">Register New Account</a></p>
                     </div>
@@ -67,5 +69,23 @@
         }
     });
 </script>
+
+<script>
+    @if(session('error'))
+        // If SweetAlert is not available, fall back to the native alert
+        if (typeof Swal === "undefined") {
+            alert('{{ session('error') }}'); // Displaying a regular alert message
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'Okay'
+            });
+        }
+    @endif
+</script>
 </body>
 </html>
+
+

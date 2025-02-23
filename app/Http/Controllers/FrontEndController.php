@@ -18,8 +18,10 @@ class FrontEndController extends Controller
  public function index(){
     $slider=Slider::All();
     $lights=Highlight::all();
-        $posts = JobPost::active(5)->get();
-
+        $posts = JobPost::active(5)
+        ->where('application_deadline', '>', now()) // Ensure the application deadline is in the future
+        ->orderBy('application_deadline', 'asc')  // Order by the application deadline in ascending order
+        ->get();
         return view('frontend.index',\compact('slider','lights', 'posts'));
  }
 
@@ -48,7 +50,7 @@ class FrontEndController extends Controller
 
 
 
-   
+
 
 
 

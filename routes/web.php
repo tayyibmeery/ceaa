@@ -19,6 +19,7 @@ use App\Http\Controllers\{
 
     ApplicationController,
     CoreValuesController,
+    DashboardController,
     ExcelController,
     FrontEndController,
     HomeController,
@@ -99,9 +100,7 @@ Route::middleware(['auth', 'isadmin'])->group(
     Route::get('rollnumber/{id}/download', [RollNumberController::class, 'download'])->name('rollnumber.download');
     Route::get('rollnumber/{id}/print', [RollNumberController::class, 'print'])->name('rollnumber.print');
     Route::get('exportss',[RollNumberController::class,'app'])->name('rollnumber.exports');
-        Route::get('/dashboard', function () {
-            return view('backend.dashboard.dashboard');
-        })->name('dashboard');
+         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/export', [ExcelController::class, 'exportToExcel'])->name('applications.export');
         Route::get('/result/upload', [ResultListController::class, 'results'])->name('results.form');
         Route::post('/results/upload', [ResultListController::class, 'uploadResults'])->name('results.upload');

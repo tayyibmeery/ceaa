@@ -14,8 +14,11 @@
                 @csrf
                 <div class="form-group">
                     <label for="email" class="sr-only">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required
+                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required
                            placeholder="Email">
+                    @error('email')
+                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group m-b-5">
                     <label for="password" class="sr-only">Password</label>
@@ -26,6 +29,9 @@
                             <i class="far fa-eye-slash" id="togglePassword" style="cursor: pointer"></i>
                         </span>
                     </div>
+                    @error('password')
+                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group form-inline text-left">
                     <div class="form-check">

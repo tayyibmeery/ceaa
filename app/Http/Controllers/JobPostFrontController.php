@@ -13,6 +13,9 @@ class JobPostFrontController extends Controller
 
     public function show($id)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'You need to log in first before apply');
+        }
         $jobPost = JobPost::findOrFail($id);
         $user = auth()->user();
 
