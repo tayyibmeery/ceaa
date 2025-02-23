@@ -361,7 +361,7 @@
                         <div class="d-flex justify-content-center mb-2">
                             <a href="{{ route('profile.edit') }}" class="btn btn-warning m-r-20">Edit Profile</a>
 
-                            <a href="{{ route('projects') }}" class="btn btn-success">Back to Apply Post</a>
+                            <a href="{{ route('projects.index') }}" class="btn btn-success">Back to Apply Post</a>
                         </div>
 
                     </div>
