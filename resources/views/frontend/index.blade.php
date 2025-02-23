@@ -33,38 +33,36 @@
         <h2>Short Links</h2>
     </div>
     <div class="row py-4">
-        {{-- <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <div class="CardBox">
-                <a target="_blank" href="{{route('projects')}}">
-                    <div class="boxColorN">
-                        <img src="{{ asset('frontend/icons/project.png')}}" width="90px" height="90px" alt="New Projects">
-                    </div>
-                        <div class="para-text">New Projects</div>
-
-
-                </a>
+      <div class="col-6 col-md-3 mb-4 mb-md-0">
+    <div class="CardBox">
+        <a target="_blank" href="{{ route('projects.index', ['type' => 'new']) }}">
+            <div class="boxColorN">
+                <img src="{{ asset('frontend/icons/project.png') }}" width="90px" height="90px" alt="New Projects">
             </div>
-        </div> --}}
-        <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <div class="CardBox">
-                <a target="_blank" href="{{route('projects')}}">
-                    <div class="boxColorN">
-                        <img src="{{ asset('frontend/icons/ongoing.png')}}" width="90px" height="90px" alt="New Projects">
-                    </div>
-                    <div class="para-text">OnGoing Projects</div>
-                </a>
+            <div class="para-text">New Projects</div>
+        </a>
+    </div>
+</div>
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+    <div class="CardBox">
+        <a target="_blank" href="{{ route('projects.index', ['type' => 'ongoing']) }}">
+            <div class="boxColorN">
+                <img src="{{ asset('frontend/icons/ongoing.png') }}" width="90px" height="90px" alt="Ongoing Projects">
             </div>
-        </div>
-        <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <div class="CardBox">
-                <a target="_blank" href="{{route('projects')}}">
-                    <div class="boxColorN">
-                        <img src="{{ asset('frontend/icons/completed.png')}}" width="90px" height="90px" alt="New Projects">
-                    </div>
-                    <div class="para-text">Completed Projects</div>
-                </a>
+            <div class="para-text">OnGoing Projects</div>
+        </a>
+    </div>
+</div>
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+    <div class="CardBox">
+        <a target="_blank" href="{{ route('projects.index', ['type' => 'completed']) }}">
+            <div class="boxColorN">
+                <img src="{{ asset('frontend/icons/completed.png') }}" width="90px" height="90px" alt="Completed Projects">
             </div>
-        </div>
+            <div class="para-text">Completed Projects</div>
+        </a>
+    </div>
+</div>
         {{-- <div class="col-6 col-md-3 mb-4 mb-md-0">
             <div class="CardBox">
                 <a target="_blank" href="status/application-status.html">

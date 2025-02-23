@@ -44,13 +44,9 @@ Route::get('/servises', [FrontEndController::class, 'servises'])->name('servises
 // Route::get('/projects', [FrontEndController::class, 'projects'])->name('projects');
 
 
-
-Route::get('/projects', [ProjectController::class, 'projects'])->name('projects.index');
-Route::get('projects/new', [ProjectController::class, 'newProjects'])->name('projects.new');
-Route::get('projects/all', [ProjectController::class, 'allProjects'])->name('projects.all');
-Route::get('projects/ongoing', [ProjectController::class, 'ongoingProjects'])->name('projects.ongoing');
-Route::get('projects/completed', [ProjectController::class, 'completedProjects'])->name('projects.completed');
-Route::get('projects/latest', [ProjectController::class, 'latestProjects'])->name('projects.latest');
+Route::get('/projects/{type?}', [ProjectController::class, 'projects'])
+->name('projects.index')
+->where('type', 'new|ongoing|completed');
 
 
 Route::get('/applicationstatus', [FrontEndController::class, 'applicationstatus'])->name('applicationstatus');
@@ -121,4 +117,3 @@ Route::middleware(['auth', 'isadmin'])->group(
 );
 
 // Project Routes
-

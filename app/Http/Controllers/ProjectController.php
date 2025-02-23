@@ -7,74 +7,37 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function projects()
+    public function projects($type = null)
     {
-        $posts = JobPost::active()
-            ->where('application_deadline', '>', now())
-            ->orderBy('application_deadline', 'asc')
-            ->paginate(10);
+        $query = JobPost::query();
 
-        return view('frontend.project', compact('posts'));
-    }
+        switch ($type) {
+            case 'new':
+                $query->active()->where('created_at', '>=', now()->subDays(7))
+                    ->orderBy('created_at', 'desc');
+                break;
+            case 'ongoing':
+                $query->active()->where('application_deadline', '>', now())
+                    ->orderBy('application_deadline', 'asc');
+                break;
+            case 'completed':
+                $query->where('application_deadline', '<=', now())
+                    ->orderBy('application_deadline', 'desc');
+                break;
+            default:
+                // Default to "new" if no type is provided
+                $query->active()->where('created_at', '>=', now()->subDays(7))
+                    ->orderBy('created_at', 'desc');
+                break;
+        }
 
-    public function newProjects()
-    {
-        $posts = JobPost::active()
-            ->where('created_at', '>=', now()->subDays(7))
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $posts = $query->paginate(10);
 
         return view('frontend.project', [
             'posts' => $posts,
-            'type' => 'new'
+            'type' => $type
         ]);
     }
 
-    public function allProjects()
-    {
-        $posts = JobPost::orderBy('created_at', 'desc')
-            ->paginate(10);
 
-        return view('frontend.project', [
-            'posts' => $posts,
-            'type' => 'all'
-        ]);
-    }
-
-    public function ongoingProjects()
-    {
-        $posts = JobPost::active()
-            ->where('application_deadline', '>', now())
-            ->orderBy('application_deadline', 'asc')
-            ->paginate(10);
-
-        return view('frontend.project', [
-            'posts' => $posts,
-            'type' => 'ongoing'
-        ]);
-    }
-
-    public function completedProjects()
-    {
-        $posts = JobPost::where('application_deadline', '<=', now())
-            ->orderBy('application_deadline', 'desc')
-            ->paginate(10);
-
-        return view('frontend.project', [
-            'posts' => $posts,
-            'type' => 'completed'
-        ]);
-    }
-
-    public function latestProjects()
-    {
-        $posts = JobPost::active()
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-        return view('frontend.project', [
-            'posts' => $posts,
-            'type' => 'latest'
-        ]);
-    }
 }
