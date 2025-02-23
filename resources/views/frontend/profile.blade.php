@@ -1,208 +1,168 @@
-@extends('frontend.layout.main')
+@extends("frontend.layout.main")
 
-@section('title', 'Apply for Job: ')
+@section("title", "My Profile")
 
-@section('content')
+@section("content")
 
-<section style="background-color: #eee;">
+<section class="bg-white">
     <div class="container py-5">
-        <div class="row">
-            <div class="col">
+        <!-- Profile Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="page-title">
+                    <h1>My Profile</h1>
+                    <span>Manage your account information and view applications</span>
+                </div>
             </div>
         </div>
 
         <div class="row">
+            <!-- Left Sidebar -->
             <div class="col-lg-4">
+                <!-- News Alerts Card -->
                 <div class="card mb-4">
-                    <div class="widget clearfix widget-archive notificationSection" style="list-style: none; font-size: 12px">
-                        <div class="widget-title text-center">
-                            <h4 class="btn btn-rounded btn-danger" style="width: 100%">News Alerts</h4>
-                        </div>
-                        <marquee direction="up" scrollamount="2" height="300px" onmouseover="this.stop()" onmouseout="this.start()">
-                            <div class="notificationsView">
-                            </div>
+                    <div class="card-header">
+                        <h5 class="mb-0">Latest Updates</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            @foreach ($posts as $post)
+                            <div class="list-group-item">
+                                <div class="d-flex flex-column">
+                                    <h6 class="mb-2">{{ $post->title }}</h6>
 
-                            @foreach ($posts as $post )
-                            <li class="notification-box blink dynamic" style="border-bottom: 1px solid; font-size: 12px !important;">
-                                <div class="row" class="align-items-center">
-                                    <!-- Job Title Centered -->
-                                    <div class="col-12 text-center">
-                                        <strong class="text-info">Job Title: {{$post->title}}</strong>
-                                    </div>
-
-                                    <!-- Buttons (Download & Apply Now) aligned to the right -->
-                                    <div class="col-12 text-end">
-                                        <a href="{{ asset('storage/' . $post->advertisement_file) }}" class="btn btn-success btn-sm blink dynamic">
-                                            Download - {{ \Carbon\Carbon::parse($post->advertisement_date)->format('M/Y') }}
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href="{{ asset("storage/" . $post->advertisement_file) }}" class="btn btn-info btn-sm me-2">
+                                            Download
                                         </a>
-                                        <br>
-                                        <a href="{{ route('postsjob.show', $post->id) }}" class="btn btn-warning btn-sm dynamic" style="margin-right: 2px;">
+                                        <a href="{{ route("postsjob.show", $post->id) }}" class="btn btn-success btn-sm">
                                             Apply Now
                                         </a>
                                     </div>
 
-                                    <!-- Timestamp centered -->
-                                    <div class="col-12 text-center">
-                                        <small class="badge text-info">
-                                            {{ \Carbon\Carbon::parse($post->created_at)->format('M/Y h:i A') }}
-                                        </small>
-                                    </div>
+                                    <small class="text-muted mt-2">
+                                        Posted: {{ \Carbon\Carbon::parse($post->created_at)->format("M/Y h:i A") }}
+                                    </small>
                                 </div>
-                            </li>
-
+                            </div>
                             @endforeach
-                        </marquee>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Applications Summary Card -->
                 <div class="card mb-4">
-                    <div class="widget clearfix widget-archive notificationSection" style="list-style: none; font-size: 12px">
-                        <table class="table table-bordered">
-                            <!-- Applications Section -->
+                    <div class="card-header">
+                        <h5 class="mb-0">Applications Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Applications Table -->
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="col-sm-3">Applications</th>
-                                    <th scope="col" class="col-sm-9">Details</th>
+                                    <th>Job Title</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if(auth()->user()->applications->isNotEmpty())
-                                @foreach(auth()->user()->applications as $application)
+                                @forelse(auth()->user()->applications as $application)
                                 <tr>
-                                    <td><strong>{{ $application->jobPost->title }}</strong></td>
+                                    <td>{{ $application->jobPost->title }}</td>
                                     <td>
-                                        Status: {{ ucfirst($application->status) }} <br>
-                                        Applied on: {{ \Carbon\Carbon::parse($application->submission_date)->format('d M Y') }}
+                                        <span class="badge {{ $application->status === "pending" ? "badge-warning" : "badge-success" }}">
+                                            {{ ucfirst($application->status) }}
+                                        </span>
                                     </td>
                                 </tr>
-                                @endforeach
-                                @else
+                                @empty
                                 <tr>
-                                    <td colspan="2">No applications found.</td>
+                                    <td colspan="2" class="text-center">No applications found</td>
                                 </tr>
-                                @endif
+                                @endforelse
                             </tbody>
                         </table>
+                    </div>
+                </div>
 
-                        <hr>
-
-                        <!-- Tests Section -->
-                        <table class="table table-bordered">
+                <!-- Results Card -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Test Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="col-sm-3">Tests</th>
-                                    <th scope="col" class="col-sm-9">Details</th>
+                                    <th>Job Title</th>
+                                    <th>Result</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty(auth()->user()->applications))
-                                @foreach(auth()->user()->applications as $application)
-                                {{-- @if($application->tests->isNotEmpty())
-                                @foreach($application->tests as $test)
+                                @forelse(auth()->user()->applications as $application)
+                                @if ($application->result)
                                 <tr>
-                                    <td><strong>{{ $test->test_id }}</strong></td>
-                                <td>
-                                    Test Date: {{ $test->test_date->format('d M Y') }} <br>
-                                    Center: {{ $test->test_center }} | Time: {{ $test->test_time }}
-                                </td>
-                                </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="2">No tests scheduled for this application.</td>
-                                </tr>
-                                @endif --}}
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="2">No applications found.</td>
+                                    <td>{{ $application->jobPost->title }}</td>
+                                    <td>
+                                        <strong>{{ $application->result->marks_obtained }}/{{ $application->result->total_marks }}</strong>
+                                        <br>
+                                        <small class="text-muted">{{ $application->result->remarks ?? "No remarks" }}</small>
+                                    </td>
                                 </tr>
                                 @endif
+                                @empty
+                                <tr>
+                                    <td colspan="2" class="text-center">No results available</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
-
-                        <hr>
-
-                        <!-- Results Section -->
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="col-sm-3">Results</th>
-                                    <th scope="col" class="col-sm-9">Details</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (!empty(auth()->user()->applications))
-                                @foreach(auth()->user()->applications as $application)
-                                {{-- @if($application->results->isNotEmpty())
-                                @foreach($application->results as $result)
-                                <tr>
-                                    <td><strong>Marks Obtained: {{ $result->marks_obtained }}</strong></td>
-                                <td>
-                                    / {{ $result->total_marks }} <br>
-                                    Remarks: {{ $result->remarks ?? 'N/A' }}
-                                </td>
-                                </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="2">No results found for this application.</td>
-                                </tr>
-                                @endif --}}
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="2">No applications found.</td>
-                                </tr>
-                                @endif
-                            </tbody>
-                        </table>
-
-
                     </div>
                 </div>
             </div>
+
+            <!-- Main Profile Content -->
             <div class="col-lg-8">
                 <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Profile Information</h5>
+                    </div>
                     <div class="card-body">
-
                         <!-- Profile Info Section: Name, Gender, Profile Picture -->
                         <div class="row mb-4">
                             <div class="col-sm-6">
                                 <p class="mb-0">First Name</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->first_name ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->first_name ?? "N/A" }}</p>
                                 <p class="mb-0">Last Name</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->last_name ?? 'N/A' }}</p>
-
+                                <p class="text-muted mb-0">{{ auth()->user()->last_name ?? "N/A" }}</p>
 
                             </div>
 
                             <div class="col-sm-6 d-flex justify-content-end align-items-start">
-                                <img src="{{ asset('storage/' . (auth()->user()->profile_picture ?? 'default-profile.jpg')) }}" alt="avatar" class="rounded border img-fluid" style="width: 100px; height: 100px;">
+                                <img src="{{ asset("storage/" . (auth()->user()->profile_picture ?? "default-profile.jpg")) }}" alt="avatar" class="img-fluid rounded border" style="width: 100px; height: 100px;">
                             </div>
                         </div>
 
                         <hr>
-                         <div class="row mb-4">
+                        <div class="row mb-4">
                             <div class="col-sm-6">
                                 <p class="mb-0">Father Name</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->father_name ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->father_name ?? "N/A" }}</p>
                             </div>
                             <div class="col-sm-6">
                                 <p class="mb-0">Gender</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->gender ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->gender ?? "N/A" }}</p>
                             </div>
                         </div>
-<hr>
+                        <hr>
                         <!-- Contact Info Section: Email, Phone -->
                         <div class="row mb-4">
                             <div class="col-sm-6">
                                 <p class="mb-0">Email</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->email ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->email ?? "N/A" }}</p>
                             </div>
                             <div class="col-sm-6">
                                 <p class="mb-0">Phone</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->phone ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->phone ?? "N/A" }}</p>
                             </div>
                         </div>
 
@@ -212,11 +172,11 @@
                         <div class="row mb-4">
                             <div class="col-sm-6">
                                 <p class="mb-0">Full Name</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->name ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->name ?? "N/A" }}</p>
                             </div>
                             <div class="col-sm-6">
                                 <p class="mb-0">CNIC</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->cnic ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->cnic ?? "N/A" }}</p>
                             </div>
                         </div>
 
@@ -225,7 +185,9 @@
                         <div class="row mb-4">
                             <div class="col-sm-6">
                                 <p class="mb-0">Date of Birth</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->date_of_birth ? \Carbon\Carbon::parse(auth()->user()->date_of_birth)->format('d M Y') : 'N/A' }}</p>
+                                <p class="text-muted mb-0">
+                                    {{ auth()->user()->date_of_birth ? \Carbon\Carbon::parse(auth()->user()->date_of_birth)->format("d M Y") : "N/A" }}
+                                </p>
                             </div>
                         </div>
 
@@ -235,11 +197,11 @@
                         <div class="row mb-4">
                             <div class="col-sm-6">
                                 <p class="mb-0">Address</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->address ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->address ?? "N/A" }}</p>
                             </div>
                             <div class="col-sm-6">
                                 <p class="mb-0">Province of Domicile</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->province_of_domicile ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->province_of_domicile ?? "N/A" }}</p>
                             </div>
                         </div>
 
@@ -248,11 +210,11 @@
                         <div class="row mb-4">
                             <div class="col-sm-6">
                                 <p class="mb-0">District of Domicile</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->district_of_domicile ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->district_of_domicile ?? "N/A" }}</p>
                             </div>
                             <div class="col-sm-6">
                                 <p class="mb-0">Postal City</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->postal_city ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->postal_city ?? "N/A" }}</p>
                             </div>
                         </div>
 
@@ -261,20 +223,11 @@
                         <div class="row mb-4">
                             <div class="col-sm-6">
                                 <p class="mb-0">Postal Address</p>
-                                <p class="text-muted mb-0">{{ auth()->user()->postal_address ?? 'N/A' }}</p>
+                                <p class="text-muted mb-0">{{ auth()->user()->postal_address ?? "N/A" }}</p>
                             </div>
                         </div>
 
                         <hr>
-
-
-
-
-
-
-
-
-
 
                         <!-- Applications -->
                         <div class="row">
@@ -283,11 +236,13 @@
                             </div>
                             <div class="col-sm-9">
                                 <ul class="text-muted mb-0">
-                                    @if(auth()->user()->applications->isNotEmpty())
-                                    @foreach(auth()->user()->applications as $application)
+                                    @if (auth()->user()->applications->isNotEmpty())
+                                    @foreach (auth()->user()->applications as $application)
                                     <li>
-                                        <strong>{{ $application->jobPost->title }}</strong> - Status: {{ ucfirst($application->status) }} <br>
-                                        Applied on: {{ \Carbon\Carbon::parse($application->submission_date)->format('d M Y') }}
+                                        <strong>{{ $application->jobPost->title }}</strong> - Status:
+                                        {{ ucfirst($application->status) }} <br>
+                                        Applied on:
+                                        {{ \Carbon\Carbon::parse($application->submission_date)->format("d M Y") }}
                                     </li>
                                     @endforeach
                                     @else
@@ -306,12 +261,14 @@
                             <div class="col-sm-9">
                                 <ul class="text-muted mb-0">
                                     @if (!empty(auth()->user()->applications))
-                                    @foreach(auth()->user()->applications as $application)
-                                    @if($application->tests)
-                                    {{-- @foreach($application->tests as $test) --}}
+                                    @foreach (auth()->user()->applications as $application)
+                                    @if ($application->tests)
+                                    {{-- @foreach ($application->tests as $test) --}}
                                     <li>
-                                        <strong>{{  $application->jobPost->title  }}</strong> - Test Date: {{ $application->tests->test_date }}<br>
-                                    Center: {{ $application->tests->test_center }} | Time: {{ $application->tests->test_time }}
+                                        <strong>{{ $application->jobPost->title }}</strong> - Test Date:
+                                        {{ $application->tests->test_date }}<br>
+                                        Center: {{ $application->tests->test_center }} | Time:
+                                        {{ $application->tests->test_time }}
                                     </li>
                                     {{-- @endforeach --}}
                                     @else
@@ -335,9 +292,9 @@
                             <div class="col-sm-9">
                                 <ul class="text-muted mb-0">
                                     @if (!empty(auth()->user()->applications))
-                                    @foreach(auth()->user()->applications as $application)
-                                    {{-- @if($application->results->isNotEmpty())
-                                    @foreach($application->results as $result)
+                                    @foreach (auth()->user()->applications as $application)
+                                    {{-- @if ($application->results->isNotEmpty())
+                                    @foreach ($application->results as $result)
                                     <li>
                                         <strong>Marks Obtained: {{ $result->marks_obtained }}</strong> / {{ $result->total_marks }} <br>
                                     Remarks: {{ $result->remarks ?? 'N/A' }}
@@ -356,12 +313,11 @@
                         </div>
                         <hr>
 
-
                         <!-- Edit Profile Button -->
                         <div class="d-flex justify-content-center mb-2">
-                            <a href="{{ route('profile.edit') }}" class="btn btn-warning m-r-20">Edit Profile</a>
+                            <a href="{{ route("profile.edit") }}" class="btn btn-warning m-r-20">Edit Profile</a>
 
-                            <a href="{{ route('projects.index') }}" class="btn btn-success">Back to Apply Post</a>
+                            <a href="{{ route("projects.index") }}" class="btn btn-success">Back to Apply Post</a>
                         </div>
 
                     </div>
@@ -374,8 +330,5 @@
 
 @endsection
 
-@push('scripts')
-@endpush
-
-@push('styles')
+@push("scripts")
 @endpush

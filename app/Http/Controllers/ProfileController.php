@@ -14,7 +14,11 @@ class ProfileController extends Controller
     {
 
         $candidate = Auth::user();
-        $posts = JobPost::active(5)->orderBy('created_at', 'desc')->get();
+        $posts =
+        JobPost::active(5)
+        ->where('application_deadline', '>', now()) // Ensure the application deadline is in the future
+        ->orderBy('application_deadline', 'asc')  // Order by the application deadline in ascending order
+        ->get();
 
 
         return view('frontend.profile', compact('candidate', 'posts'));
