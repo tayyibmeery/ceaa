@@ -1,50 +1,144 @@
-@extends('frontend.layout.main')
+@extends("frontend.layout.main")
 
-@section('title', 'Roll Number Slip')
+@section("title", "Roll Number Slip")
 
-@section('content')
+@section("content")
 
-<section class="d-flex justify-content-center align-items-center py-5">
+<section class="bg-light py-5">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-md-10">
-                <div class="card shadow-lg p-4">
-                    <div class="widget clearfix widget-archive notificationSection">
-                        <div class="heading-text heading-section text-center mb-4">
-                            <h4 class="text-blue">Roll Number Slip Details</h4>
-                        </div>
-                        <hr>
+        <!-- Page Header -->
+        <div class="mb-4 text-center">
+            <h2 class="fw-bold">Roll Number Slip</h2>
+            <nav aria-label="breadcrumb">
+              
+            </nav>
+        </div>
 
-                        <!-- Display Roll Number Slip Details -->
-                        @if(isset($rollNumberSlip))
-                        <div class="mt-4">
-                            <ul class="list-group">
-                                <li class="list-group-item"><strong>Roll Number:</strong> {{ $rollNumberSlip->roll_number }}</li>
-                                <li class="list-group-item"><strong>Serial Number:</strong> {{ $rollNumberSlip->serial_number }}</li>
-                                <li class="list-group-item"><strong>Test Date:</strong> {{ $rollNumberSlip->test->test_date }}</li>
-                                <li class="list-group-item"><strong>Test Time:</strong> {{ $rollNumberSlip->test->test_time }}</li>
-                                <li class="list-group-item"><strong>Test Center:</strong> {{ $rollNumberSlip->test->test_center }}</li>
-                            </ul>
-                            <div class="text-center mt-4">
-                                <a href="{{ route('roll-number-slip.download', $rollNumberSlip->id) }}" class="btn btn-success w-50">Download Roll Number Slip</a>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Alert Messages -->
+                @if (session("error"))
+                <div class="alert alert-danger alert-dismissible fade show mb-4">
+                    <i class="fas fa-exclamation-circle me-2"></i>{{ session("error") }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                @endif
+
+                <!-- Roll Number Slips -->
+                @if ($upcomingTests->count() > 0)
+                @foreach ($upcomingTests as $rollSlip)
+                <div class="card rounded-3 mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-success d-flex justify-content-between align-items-center py-3 text-white">
+                        <h5 class="card-title mb-0">Roll Number Slip</h5>
+                        <span class="badge text-success bg-white">
+                            <i class="fas fa-clock me-1"></i>Upcoming Test
+                        </span>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <!-- Job Title -->
+                        <div class="mb-4 text-center">
+                            <h4 class="mb-1">{{ $rollSlip->application->jobPost->title }}</h4>
+                            <p class="text-muted mb-0">Test Roll Number Slip</p>
+                        </div>
+
+                        <!-- Roll Number Details -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-sm-6">
+                                <div class="rounded border p-3">
+                                    <h6 class="text-success mb-3">Roll Number Details</h6>
+                                    <table class="table-sm mb-0 table">
+                                        <tr>
+                                            <th class="text-muted fw-medium" width="40%">Roll Number:</th>
+                                            <td class="fw-bold">{{ $rollSlip->roll_number }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Serial Number:</th>
+                                            <td>{{ $rollSlip->serial_number }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="rounded border p-3">
+                                    <h6 class="text-success mb-3">Test Schedule</h6>
+                                    <table class="table-sm mb-0 table">
+                                        <tr>
+                                            <th width="40%">Date:</th>
+                                            <td>{{ \Carbon\Carbon::parse($rollSlip->test->test_date)->format("d M, Y") }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Time:</th>
+                                            <td>{{ \Carbon\Carbon::parse($rollSlip->test->test_time)->format("h:i A") }}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                        @endif
 
-                        <!-- Display Errors -->
-                        @if(session('error'))
-                        <div class="alert alert-danger mt-4 text-center">
-                            {{ session('error') }}
+                        <!-- Candidate Details -->
+                        <div class="mb-4 rounded border p-3">
+                            <h6 class="text-success mb-3">Candidate Details</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="table-sm mb-0 table">
+                                        <tr>
+                                            <th width="40%">Name:</th>
+                                            <td>{{ $user->first_name . " " . $user->last_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>CNIC:</th>
+                                            <td>{{ $user->cnic }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Father's Name:</th>
+                                            <td>{{ $user->father_name }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <table class="table-sm mb-0 table">
+                                        <tr>
+                                            <th width="40%">Province:</th>
+                                            <td>{{ $user->province_of_domicile }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>District:</th>
+                                            <td>{{ $user->district_of_domicile }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Contact:</th>
+                                            <td>{{ $user->phone }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                        @endif
 
-                        <!-- No Data Found Message -->
-                        <div id="no-data-found" class="text-center mt-4" style="display: none;">
-                            <p>No roll number slip found for the entered CNIC.</p>
+                        <!-- Test Center -->
+                        <div class="rounded border p-3">
+                            <h6 class="text-success mb-3">Test Center</h6>
+                            <p class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>{{ $rollSlip->test->test_center }}
+                            </p>
                         </div>
 
+                        <!-- Download Button -->
+                        <div class="mt-4 text-center">
+                            <a href="{{ route("roll-number-slip.download", $rollSlip->id) }}" class="btn btn-success px-4">
+                                <i class="fas fa-download me-2"></i>Download Roll Number Slip
+                            </a>
+                        </div>
                     </div>
                 </div>
+                @endforeach
+                @else
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    No roll number slips found.
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -52,25 +146,9 @@
 
 @endsection
 
-@push('styles')
-<style>
-    .card {
-        border-radius: 10px;
-        background: #61d874;
-    }
-    .list-group-item {
-        background: white;
-        font-size: 16px;
-    }
-    .btn-success {
-        display: block;
-        margin: 10px auto;
-    }
-</style>
-@endpush
-
-@push('scripts')
+@push("scripts")
 <script>
     // Optional: Add any JavaScript logic if needed
+
 </script>
 @endpush

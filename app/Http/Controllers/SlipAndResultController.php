@@ -17,25 +17,32 @@ class SlipAndResultController extends Controller
     }
     public function search(Request $request)
     {
-
         $request->validate([
             'cnic' => 'required|string',
         ]);
-        $user = User::where('cnic', $request->cnic)->first();
+
+        $user = User::where('cnic', $request->cnic)
+            ->with(['educations' => function ($query) {
+                $query->orderBy('passing_year', 'desc');
+            }])
+            ->first();
 
         if (!$user) {
             return redirect()->back()->with('error', 'User not found.');
         }
 
-        $rollNumberSlip = RollNumberSlip::whereHas('application', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        })->first();
+        // Get all upcoming tests for the user
+        $upcomingTests = RollNumberSlip::with(['test', 'application.jobPost'])
+            ->whereHas('application', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->whereHas('test', function ($query) {
+                $query->where('test_date', '>=', now()->startOfDay());
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        if (!$rollNumberSlip) {
-            return redirect()->back()->with('error', 'Roll number slip not found.');
-        }
-
-        return view('frontend.roll_slip', compact('rollNumberSlip'));
+        return view('frontend.roll_slip', compact('user', 'upcomingTests'));
     }
 
     public function download($id)
@@ -76,7 +83,6 @@ class SlipAndResultController extends Controller
         }
 
         return view('frontend.result', compact('result'));
-
     }
 
     public function downloadresult($id)
