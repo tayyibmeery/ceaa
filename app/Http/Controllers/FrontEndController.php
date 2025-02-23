@@ -36,11 +36,11 @@ class FrontEndController extends Controller
         $ourservise=OurService::all();
         return view('frontend.servises', \compact('ourservise'));
     }
-    public function projects()
-    {
-        $posts=JobPost::active(5)->get();
-        return view('frontend.project' ,\compact('posts'));
-    }
+    // public function projects()
+    // {
+    //     $posts=JobPost::active(5)->get();
+    //     return view('frontend.project' ,\compact('posts'));
+    // }
 
     public function applicationstatus(){
         return view('frontend.applicationstatus');

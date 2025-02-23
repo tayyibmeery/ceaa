@@ -31,6 +31,7 @@ use App\Http\Controllers\{
     JobPostFrontController,
     OurServicesController,
     PageController,
+    ProjectController,
     SocialIconController,
     TremController,
     RollNumberController
@@ -40,7 +41,18 @@ use App\Http\Controllers\{
 Route::get('/', [FrontEndController::class, 'index'])->name('front');
 Route::get('/vision', [FrontEndController::class, 'vision'])->name('vision');
 Route::get('/servises', [FrontEndController::class, 'servises'])->name('servises');
-Route::get('/projects', [FrontEndController::class, 'projects'])->name('projects');
+// Route::get('/projects', [FrontEndController::class, 'projects'])->name('projects');
+
+
+
+Route::get('/projects', [ProjectController::class, 'projects'])->name('projects.index');
+Route::get('projects/new', [ProjectController::class, 'newProjects'])->name('projects.new');
+Route::get('projects/all', [ProjectController::class, 'allProjects'])->name('projects.all');
+Route::get('projects/ongoing', [ProjectController::class, 'ongoingProjects'])->name('projects.ongoing');
+Route::get('projects/completed', [ProjectController::class, 'completedProjects'])->name('projects.completed');
+Route::get('projects/latest', [ProjectController::class, 'latestProjects'])->name('projects.latest');
+
+
 Route::get('/applicationstatus', [FrontEndController::class, 'applicationstatus'])->name('applicationstatus');
 
 
@@ -97,17 +109,16 @@ Route::middleware(['auth', 'isadmin'])->group(
             'ourservices' => OurServicesController::class,
             'rollnumber' => RollNumberController::class,
         ]);
-    Route::get('rollnumber/{id}/download', [RollNumberController::class, 'download'])->name('rollnumber.download');
-    Route::get('rollnumber/{id}/print', [RollNumberController::class, 'print'])->name('rollnumber.print');
-    Route::get('exportss',[RollNumberController::class,'app'])->name('rollnumber.exports');
-         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('rollnumber/{id}/download', [RollNumberController::class, 'download'])->name('rollnumber.download');
+        Route::get('rollnumber/{id}/print', [RollNumberController::class, 'print'])->name('rollnumber.print');
+        Route::get('exportss', [RollNumberController::class, 'app'])->name('rollnumber.exports');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/export', [ExcelController::class, 'exportToExcel'])->name('applications.export');
         Route::get('/result/upload', [ResultListController::class, 'results'])->name('results.form');
         Route::post('/results/upload', [ResultListController::class, 'uploadResults'])->name('results.upload');
         Route::get('/export-results', [ResultListController::class, 'exportResults'])->name('results.export');
-
     }
 );
 
-
+// Project Routes
 

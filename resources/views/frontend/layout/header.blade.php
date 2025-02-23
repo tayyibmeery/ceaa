@@ -103,7 +103,7 @@
                          </li>
 
 
-                         <li class="dropdown"><a href="{{route('projects')}}">Projects</a>
+                         <li class="dropdown"><a href="{{route('projects.index')}}">Projects</a>
                              {{-- <ul class="dropdown-menu">
                                      <li class="dropdown-submenu"><a href="projects.html">Latest Projects</a>
                                      </li>
