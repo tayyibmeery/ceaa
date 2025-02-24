@@ -49,7 +49,7 @@ class SlipAndResultController extends Controller
     {
         $rollNumberSlip = RollNumberSlip::with(['application.user', 'application.jobPost', 'test'])
             ->findOrFail($id);
-        return View('pdf.roll-number-slip', compact('rollNumberSlip'));
+        // return View('pdf.roll-number-slip', compact('rollNumberSlip'));
         $pdf = PDF::loadView('pdf.roll-number-slip', compact('rollNumberSlip'));
 
         return $pdf->download('roll-number-slip.pdf');
