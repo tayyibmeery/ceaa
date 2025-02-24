@@ -25,21 +25,29 @@ class SlidersController extends Controller
 
             'slider_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        $destinationPath = public_path('sliders');
-        if (!file_exists($destinationPath)) {
-            mkdir($destinationPath, 0755, true);
+
+
+        $filePath = null;
+        if ($request->hasFile('slider_image')) {
+            $uploadDirectory = 'uploads/slider_image';
+            $uploadPath = public_path($uploadDirectory);
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true); // Create directory with full permissions
+            }
+            $fileName = time() . '_' . $request->file('slider_image')->getClientOriginalName();
+            $request->file('slider_image')->move($uploadPath, $fileName);
+
+            $filePath = $uploadDirectory . '/' . $fileName;
         }
 
-        $imageName = time() . '.' . $request->slider_image->extension();
-        $request->slider_image->move($destinationPath, $imageName);
 
-        $imagePath = 'sliders/' . $imageName;
+
 
         Slider::create([
             'welcome_text' => $request->welcome_text,
             'heading' => $request->heading,
             'button_name' => $request->button_name,
-            'slider_image' => $imagePath,
+            'slider_image' => $filePath,
         ]);
 
         return redirect()->route('slider.index')->with('success', 'Slider created successfully.');
@@ -61,24 +69,27 @@ class SlidersController extends Controller
             'slider_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Image is optional
         ]);
 
-        // Check if a new image is uploaded
-        if ($request->hasFile('slider_image')) {
-            $destinationPath = public_path('sliders');
 
-            // Delete the old image if it exists
-            if (file_exists(public_path($slider->slider_image))) {
+
+        if ($request->hasFile('slider_image')) {
+            if ($slider->slider_image && file_exists(public_path($slider->slider_image))) {
                 unlink(public_path($slider->slider_image));
             }
 
-            // Upload the new image
-            $imageName = time() . '.' . $request->slider_image->extension();
-            $request->slider_image->move($destinationPath, $imageName);
-
-            // Update the image path
-            $slider->slider_image = 'sliders/' . $imageName;
+            $uploadDirectory = 'uploads/slider_image';
+            $uploadPath = public_path($uploadDirectory);
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+            $fileName = time() . '_' . $request->file('slider_image')->getClientOriginalName();
+            $request->file('slider_image')->move($uploadPath, $fileName);
+            $filePath = $uploadDirectory . '/' . $fileName;
+        } else {
+            $filePath = $slider->slider_image;
         }
 
         // Update other fields
+        $slider->slider_image = $filePath;
         $slider->welcome_text = $request->welcome_text;
         $slider->heading = $request->heading;
         $slider->button_name = $request->button_name;
@@ -92,11 +103,11 @@ class SlidersController extends Controller
 
     public function destroy(Slider $slider)
     {
-        if ($slider->slider_image) {
-            Storage::disk('public')->delete($slider->slider_image);
+       
+        if ($slider->slider_image && file_exists(public_path($slider->slider_image))) {
+            unlink(public_path($slider->slider_image));
         }
         $slider->delete();
-
         return redirect()->route('slider.index')->with('success', 'Slider deleted successfully.');
     }
 }

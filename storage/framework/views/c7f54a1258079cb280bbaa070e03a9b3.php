@@ -25,21 +25,21 @@
         <div class="row mb-2">
 
             <div class="col-md-12">
-                 <?php if($errors->any()): ?>
-                    <div class="alert alert-danger">
-                        <ul>
-                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <li><?php echo e($error); ?></li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </ul>
-                    </div>
-                    <?php endif; ?>
-                    <?php if(session('success')): ?>
-                    <div class="alert alert-success">
-                        <?php echo e(session('success')); ?>
+                <?php if($errors->any()): ?>
+                <div class="alert alert-danger">
+                    <ul>
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+                <?php if(session('success')): ?>
+                <div class="alert alert-success">
+                    <?php echo e(session('success')); ?>
 
-                    </div>
-                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
             </div>
             <!-- Job Post Filter -->
             <div class="col-sm-4">
@@ -47,10 +47,10 @@
                     <select name="job_post_id" class="form-control" onchange="this.form.submit()">
                         <option value="">Select Job Post</option>
                         <?php $__currentLoopData = $jobPosts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $jobPost): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($jobPost->id); ?>" <?php echo e(request('job_post_id') == $jobPost->id ? 'selected' : ''); ?>>
-                                <?php echo e($jobPost->title); ?>
+                        <option value="<?php echo e($jobPost->id); ?>" <?php echo e(request('job_post_id') == $jobPost->id ? 'selected' : ''); ?>>
+                            <?php echo e($jobPost->title); ?>
 
-                            </option>
+                        </option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                 </form>
@@ -90,14 +90,14 @@
                                 </thead>
                                 <tbody>
                                     <?php $__currentLoopData = $applications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $application): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <tr>
-                                            <td><?php echo e($application->id); ?></td>
-                                            <td><?php echo e($application->user->FullName ?? 'N/A'); ?></td>
-                                            <td><?php echo e($application->user->cnic ?? 'N/A'); ?></td>
-                                            
-                                            <td><?php echo e($application->jobPost->title ?? 'N/A'); ?></td>
-                                            <td>
-                                                <span class="badge
+                                    <tr>
+                                        <td><?php echo e($application->id); ?></td>
+                                        <td><?php echo e($application->user->FullName ?? 'N/A'); ?></td>
+                                        <td><?php echo e($application->user->cnic ?? 'N/A'); ?></td>
+                                        
+                                        <td><?php echo e($application->jobPost->title ?? 'N/A'); ?></td>
+                                        <td>
+                                            <span class="badge
                                                     <?php echo e($application->status == 'applied' ? 'badge-primary' : ''); ?>
 
                                                     <?php echo e($application->status == 'test_scheduled' ? 'badge-info' : ''); ?>
@@ -107,15 +107,15 @@
                                                     <?php echo e($application->status == 'result_generated' ? 'badge-success' : ''); ?>
 
                                                 ">
-                                                    <?php echo e(ucfirst(str_replace('_', ' ', $application->status))); ?>
+                                                <?php echo e(ucfirst(str_replace('_', ' ', $application->status))); ?>
 
-                                                </span>
-                                            </td>
-                                            <td><?php echo e($application->created_at->format('d-m-Y')); ?></td>
-                                            
-                                            <td><?php echo e($application->reviewer_remarks ?? 'N/A'); ?></td>
-                                            <td>
-                                                <span class="badge
+                                            </span>
+                                        </td>
+                                        <td><?php echo e($application->created_at->format('d-m-Y')); ?></td>
+                                        
+                                        <td><?php echo e($application->reviewer_remarks ?? 'N/A'); ?></td>
+                                        <td>
+                                            <span class="badge
                                                     <?php echo e($application->payment_status == 'pending' ? 'badge-warning' : ''); ?>
 
                                                     <?php echo e($application->payment_status == 'paid' ? 'badge-success' : ''); ?>
@@ -123,54 +123,54 @@
                                                     <?php echo e($application->payment_status == 'failed' ? 'badge-danger' : ''); ?>
 
                                                 ">
-                                                    <?php echo e(ucfirst($application->payment_status)); ?>
+                                                <?php echo e(ucfirst($application->payment_status)); ?>
 
-                                                </span>
-                                            </td>
+                                            </span>
+                                        </td>
+                                        
+                                        <td><?php echo e($application->jobPost->application_deadline ? \Carbon\Carbon::parse($application->jobPost->application_deadline)->format('d-m-Y') : 'N/A'); ?></td>
+                                        
+                                        <td>
+                                            <?php if($application->user->profile_picture): ?>
+                                            <img src="<?php echo e(asset($application->user->profile_picture)); ?>" alt="Profile Picture" style="width: 50px; height: 50px; object-fit: cover;">
+                                            <?php else: ?>
+                                            N/A
+                                            <?php endif; ?>
+                                        </td>
+                                        
+                                        <td>
+                                            <?php if($application->fees_receipt): ?>
+                                            <?php
+                                            $fileExtension = pathinfo($application->fees_receipt, PATHINFO_EXTENSION);
+                                            ?>
+
+                                            <?php if(in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'])): ?>
+                                            <!-- Show image thumbnail and View button -->
+                                            <img src="<?php echo e(asset($application->fees_receipt)); ?>" alt="Fees Receipt" style="width: 50px; height: 50px; object-fit: cover;">
+                                            <button type="button" class="btn btn-primary btn-sm view-image" data-img="<?php echo e(asset($application->fees_receipt)); ?>">View</button>
+
+                                            <?php elseif(strtolower($fileExtension) == 'pdf'): ?>
+                                            <!-- Show PDF view button -->
+                                            <a href="<?php echo e(asset($application->fees_receipt)); ?>" target="_blank" class="btn btn-info btn-sm">View </a>
+
+                                            <?php else: ?>
+                                            <span><?php echo e($application->fees_receipt); ?></span>
+                                            <?php endif; ?>
+                                            <?php else: ?>
+                                            N/A
+                                            <?php endif; ?>
+                                        </td>
+
+                                        <td>
                                             
-                                            <td><?php echo e($application->jobPost->application_deadline ? \Carbon\Carbon::parse($application->jobPost->application_deadline)->format('d-m-Y') : 'N/A'); ?></td>
-                                            
-                                            <td>
-                                                <?php if($application->user->profile_picture): ?>
-                                                    <img src="<?php echo e(asset('storage/'.$application->user->profile_picture)); ?>" alt="Profile Picture" style="width: 50px; height: 50px; object-fit: cover;">
-                                                <?php else: ?>
-                                                    N/A
-                                                <?php endif; ?>
-                                            </td>
-                                            
-                                            <td>
-    <?php if($application->fees_receipt): ?>
-        <?php
-        $fileExtension = pathinfo($application->fees_receipt, PATHINFO_EXTENSION);
-        ?>
-
-        <?php if(in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'])): ?>
-            <!-- Show image thumbnail and View button -->
-            <img src="<?php echo e(asset('storage/'.$application->fees_receipt)); ?>" alt="Fees Receipt" style="width: 50px; height: 50px; object-fit: cover;">
-            <button type="button" class="btn btn-primary btn-sm view-image" data-img="<?php echo e(asset('storage/'.$application->fees_receipt)); ?>">View</button>
-
-        <?php elseif(strtolower($fileExtension) == 'pdf'): ?>
-            <!-- Show PDF view button -->
-            <a href="<?php echo e(asset('storage/'.$application->fees_receipt)); ?>" target="_blank" class="btn btn-info btn-sm">View </a>
-
-        <?php else: ?>
-            <span><?php echo e($application->fees_receipt); ?></span>
-        <?php endif; ?>
-    <?php else: ?>
-        N/A
-    <?php endif; ?>
-</td>
-
-                                            <td>
-                                                
-                                                <a href="<?php echo e(route('applications.edit', $application->id)); ?>" class="btn btn-warning btn-sm">Edit</a>
-                                                <form action="<?php echo e(route('applications.destroy', $application->id)); ?>" method="POST" style="display: inline;">
-                                                    <?php echo csrf_field(); ?>
-                                                    <?php echo method_field('DELETE'); ?>
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                            <a href="<?php echo e(route('applications.edit', $application->id)); ?>" class="btn btn-warning btn-sm">Edit</a>
+                                            <form action="<?php echo e(route('applications.destroy', $application->id)); ?>" method="POST" style="display: inline;">
+                                                <?php echo csrf_field(); ?>
+                                                <?php echo method_field('DELETE'); ?>
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
@@ -221,9 +221,9 @@
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         // When the "View Image" button is clicked
-        $('.view-image').on('click', function () {
+        $('.view-image').on('click', function() {
             var imgSrc = $(this).data('img'); // Get the image source from data-img attribute
 
             // Set the image source to the modal
@@ -233,6 +233,7 @@
             $('#imageModal').modal('show');
         });
     });
+
 </script>
 <?php $__env->stopPush(); ?>
 

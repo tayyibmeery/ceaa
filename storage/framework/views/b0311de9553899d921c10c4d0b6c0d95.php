@@ -197,7 +197,7 @@ endif;
 unset($__errorArgs, $__bag); ?>" id="advertisement_file" name="advertisement_file"
                   accept="application/pdf,image/*">
                 <?php if(isset($jobPost) && $jobPost->advertisement_file): ?>
-                  <p>Current File: <a href="<?php echo e(asset('storage/' . $jobPost->advertisement_file)); ?>" target="_blank">View</a></p>
+                  <p>Current File: <a href="<?php echo e(asset( $jobPost->advertisement_file)); ?>" target="_blank">View</a></p>
                 <?php endif; ?>
                 <?php $__errorArgs = ['advertisement_file'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
