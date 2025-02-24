@@ -94,9 +94,15 @@ class SlipAndResultController extends Controller
 
     public function downloadresult($id)
     {
+        $result = Result::with([
+            'application.user',
+            'application.jobPost',
+            'application.tests'
+        ])->findOrFail($id);
 
-        $result = Result::findOrFail($id);
-        $pdf = \PDF::loadView('pdf.result-card', compact('result'));
+        $pdf = PDF::loadView('pdf.result-card', compact('result'))
+            ->setPaper('a4', 'portrait');
+
         return $pdf->download('result-card.pdf');
     }
 }
