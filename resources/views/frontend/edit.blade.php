@@ -9,68 +9,68 @@
             <h2>Edit Profile</h2>
             <p class="text-muted">Update your personal information and education details</p>
         </div>
-
-        <div class="row">
-            <div class="col-lg-4">
-                <!-- Profile Picture Card -->
-                <div class="card mb-4">
-                    <div class="card-header bg-success py-3 text-center text-white">
-                        <h5 class="mb-0">Profile Picture</h5>
-                    </div>
-                    <div class="card-body text-center">
-                           <form action="{{ route("profile.update") }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method("PUT")
-                        <div class="mb-3">
-                            <img src="{{ asset("public/" . (auth()->user()->profile_picture ?? "default-profile.jpg")) }}" class="rounded-circle mb-3 border border-2" width="150" height="150" id="preview-image">
+        <form action="{{ route("profile.update") }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method("PUT")
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Profile Picture Card -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-success py-3 text-center text-white">
+                            <h5 class="mb-0">Profile Picture</h5>
                         </div>
-                        <div class="mb-3">
-                            <input type="file" class="form-control @error(" profile_picture") is-invalid @enderror" id="profile_picture" name="profile_picture" onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])" accept="image/*">
-                            @error("profile_picture")
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        <div class="card-body text-center">
+
+                            <div class="mb-3">
+                                <img src="{{ asset("public/" . (auth()->user()->profile_picture ?? "default-profile.jpg")) }}" class="rounded-circle mb-3 border border-2" width="150" height="150" id="preview-image">
+                            </div>
+                            <div class="mb-3">
+                                <input type="file" class="form-control @error(" profile_picture") is-invalid @enderror" id="profile_picture" name="profile_picture" onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])" accept="image/*">
+                                @error("profile_picture")
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-8">
-                <div class="card mb-4">
-                    <div class="card-header bg-success py-3 text-center text-white">
-                        <h5 class="mb-0">Personal Information</h5>
-                    </div>
-                    <div class="card-body">
-                        <!-- Success Message -->
-                        @if (session("success"))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="fas fa-check-circle me-2"></i>
-                            {{ session("success") }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-header bg-success py-3 text-center text-white">
+                            <h5 class="mb-0">Personal Information</h5>
                         </div>
-                        @endif
+                        <div class="card-body">
+                            <!-- Success Message -->
+                            @if (session("success"))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="fas fa-check-circle me-2"></i>
+                                {{ session("success") }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            @endif
 
-                        <!-- Error Message -->
-                        @if (session("error"))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle me-2"></i>
-                            {{ session("error") }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        @endif
+                            <!-- Error Message -->
+                            @if (session("error"))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                {{ session("error") }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            @endif
 
-                        <!-- Validation Errors -->
-                        @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            <strong>Please fix the following errors:</strong>
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        @endif
+                            <!-- Validation Errors -->
+                            @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Please fix the following errors:</strong>
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            @endif
 
 
 
@@ -265,11 +265,12 @@
                                     <i class="fas fa-times me-1"></i>Cancel
                                 </a>
                             </div>
-                        </form>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </section>
 
