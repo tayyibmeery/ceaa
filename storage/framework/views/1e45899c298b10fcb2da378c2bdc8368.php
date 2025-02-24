@@ -175,7 +175,7 @@
                         </span>
                     </div>
                     <div class="col-4 col-sm-4">
-                        <a href="<?php echo e(asset('storage/' . $post->advertisement_file)); ?>" class="btn btn-success btn-sm dynamic" style="float: right;  width: max-content; margin-right: 2px" target="_blank"><?php echo e($post->title); ?> - <?php echo e(\Carbon\Carbon::parse($post->advertisement_date)->format('M/Y')); ?></a>
+                        <a href="<?php echo e(asset( $post->advertisement_file)); ?>" class="btn btn-success btn-sm dynamic" style="float: right;  width: max-content; margin-right: 2px" target="_blank"><?php echo e($post->title); ?> - <?php echo e(\Carbon\Carbon::parse($post->advertisement_date)->format('M/Y')); ?></a>
                         <span class="tab"></span>
                          <?php if(\Carbon\Carbon::now()->lt($post->application_deadline)): ?>
                         <a href="<?php echo e(route('postsjob.show', $post->id)); ?>" class="btn btn-warning btn-sm dynamic" style="float: right;  width: max-content; margin-right: 2px">Apply Now </a>

@@ -108,7 +108,7 @@
                 <input type="file" class="form-control @error('advertisement_file') is-invalid @enderror" id="advertisement_file" name="advertisement_file"
                   accept="application/pdf,image/*">
                 @if(isset($jobPost) && $jobPost->advertisement_file)
-                  <p>Current File: <a href="{{ asset('storage/' . $jobPost->advertisement_file) }}" target="_blank">View</a></p>
+                  <p>Current File: <a href="{{ asset( $jobPost->advertisement_file) }}" target="_blank">View</a></p>
                 @endif
                 @error('advertisement_file')
                   <div class="invalid-feedback">{{ $message }}</div>
