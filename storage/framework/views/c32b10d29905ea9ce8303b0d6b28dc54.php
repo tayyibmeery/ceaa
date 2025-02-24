@@ -55,7 +55,7 @@
                     <td><?php echo e($jobPost->application_deadline); ?></td>
                     <td>
                       <?php if($jobPost->advertisement_file): ?>
-                        <a href="<?php echo e(asset('storage/' . $jobPost->advertisement_file)); ?>" target="_blank">View File</a>
+                        <a href="<?php echo e(asset( $jobPost->advertisement_file)); ?>" target="_blank">View File</a>
                       <?php else: ?>
                         No file uploaded
                       <?php endif; ?>

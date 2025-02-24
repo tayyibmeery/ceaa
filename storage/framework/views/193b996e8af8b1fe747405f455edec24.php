@@ -163,29 +163,35 @@
                         <?php echo e($result->application->user->last_name); ?></th>
                     <td></td>
                     <th rowspan="3" style="text-align: center;">
-<?php
-    // Get the image path
-    $imagePath = $result->application->user->profile_picture ?? 'default.jpg';
-    $fullPath = public_path($imagePath);
+                        <?php
+                            // Get the image path
+                            $imagePath = $result->application->user->profile_picture ?? 'default.jpg';
+                            $fullPath = public_path($imagePath);
 
-    // Check if the image exists
-    if (file_exists($fullPath)) {
-        // Get the image MIME type
-        $mimeType = mime_content_type($fullPath); // e.g., image/jpeg or image/png
+                            // Check if the image exists
+                            if (file_exists($fullPath)) {
+                                // Get the image MIME type
+                                $mimeType = mime_content_type($fullPath);
 
-        // Encode the image to Base64
-        $imageData = base64_encode(file_get_contents($fullPath));
+                                // Encode the image to Base64
+                                $imageData = base64_encode(file_get_contents($fullPath));
 
-        // Generate the Base64 image source
-        $imageSrc = 'data:' . $mimeType . ';base64,' . $imageData;
-    } else {
-        // Fallback to default image
-        $imageSrc = asset('default.jpg');
-    }
-?>
-
-
-                        <img src="<?php echo e($imageSrc); ?>" class="profile-image" alt="Profile Photo"></th>
+                                // Generate the Base64 image source
+                                $imageSrc = 'data:' . $mimeType . ';base64,' . $imageData;
+                            } else {
+                                // Fallback to default image in public path
+                                $defaultPath = public_path('default.jpg');
+                                if (file_exists($defaultPath)) {
+                                    $mimeType = mime_content_type($defaultPath);
+                                    $imageData = base64_encode(file_get_contents($defaultPath));
+                                    $imageSrc = 'data:' . $mimeType . ';base64,' . $imageData;
+                                } else {
+                                    $imageSrc = '';
+                                }
+                            }
+                        ?>
+                        <img src="<?php echo e($imageSrc); ?>" class="profile-image" alt="Profile Photo">
+                    </th>
                 </tr>
                 <tr>
                     <th style="text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CNIC:</strong></th>
