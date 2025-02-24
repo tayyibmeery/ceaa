@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JobPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -94,13 +94,20 @@ class ProfileController extends Controller
                 $user->password = Hash::make($validated['password']);
             }
 
-            // Handle profile picture upload
+
+
             if ($request->hasFile('profile_picture')) {
-                if ($user->profile_picture) {
-                    Storage::disk('public')->delete($user->profile_picture);
+                if ($user->profile_picture && file_exists(public_path($user->profile_picture))) {
+                    unlink(public_path($user->profile_picture));
                 }
-                $imagePath = $request->file('profile_picture')->store('profile_pictures', 'public');
-                $user->profile_picture = $imagePath;
+                $uploadPath = public_path('uploads/profile_pictures');
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0777, true); // Create directory with full permissions
+                }
+                $image = $request->file('profile_picture');
+                $imageName = time() . '_' . $image->getClientOriginalName(); // Unique filename
+                $image->move($uploadPath, $imageName);
+                $user->profile_picture = 'uploads/profile_pictures/' . $imageName;
             }
 
             $user->save();
