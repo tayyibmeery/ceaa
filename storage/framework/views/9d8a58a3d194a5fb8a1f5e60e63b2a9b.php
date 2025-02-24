@@ -176,11 +176,11 @@
 <body>
     <div class="container">
         <div class="watermark">
-            <img src="{{ public_path('frontend/images/logo.png') }}" alt="Watermark">
+            <img src="<?php echo e(public_path('frontend/images/logo.png')); ?>" alt="Watermark">
         </div>
 
         <div class="header">
-            <img src="{{ public_path('frontend/images/logo.png') }}" class="logo" alt="Logo">
+            <img src="<?php echo e(public_path('frontend/images/logo.png')); ?>" class="logo" alt="Logo">
             <div class="slip-title">ROLL NUMBER SLIP</div>
         </div>
 
@@ -188,11 +188,11 @@
             <table>
                 <tr>
                     <th style="text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Name:</strong></th>
-                    <th style="text-align: left">{{ $rollNumberSlip->application->user->first_name }} {{ $rollNumberSlip->application->user->last_name }}</th>
+                    <th style="text-align: left"><?php echo e($rollNumberSlip->application->user->first_name); ?> <?php echo e($rollNumberSlip->application->user->last_name); ?></th>
                     <td></td>
                     <th rowspan="3" style="text-align: center;">
 
-                        @php
+                        <?php
     $imagePath = $rollNumberSlip->application->user->profile_picture ?? 'default.jpg';
     $fullPath = public_path($imagePath);
 
@@ -210,17 +210,17 @@
         // Fallback to default image
         $imageSrc = asset('default.jpg');
     }
-@endphp
-                        <img src="{{$imageSrc }}" class="profile-image" alt="Profile Photo"></th>
+?>
+                        <img src="<?php echo e($imageSrc); ?>" class="profile-image" alt="Profile Photo"></th>
                 </tr>
                 <tr>
                     <th style="text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CNIC:</strong></th>
-                    <th style="text-align: left">{{ $rollNumberSlip->application->user->cnic }}</th>
+                    <th style="text-align: left"><?php echo e($rollNumberSlip->application->user->cnic); ?></th>
                     <td></td>
                 </tr>
                 <tr>
                     <th style="text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Roll Number:</strong></th>
-                    <th style="text-align: left">{{ $rollNumberSlip->roll_number }}</th>
+                    <th style="text-align: left"><?php echo e($rollNumberSlip->roll_number); ?></th>
                     <td></td>
 
                 </tr>
@@ -241,8 +241,8 @@
 
             </tr>
             <tr>
-                <td>{{ \Carbon\Carbon::parse($rollNumberSlip->test->test_date)->format('d M, Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($rollNumberSlip->test->test_time)->format('h:i A') }}</td>
+                <td><?php echo e(\Carbon\Carbon::parse($rollNumberSlip->test->test_date)->format('d M, Y')); ?></td>
+                <td><?php echo e(\Carbon\Carbon::parse($rollNumberSlip->test->test_time)->format('h:i A')); ?></td>
 
             </tr>
             <tr>
@@ -251,18 +251,18 @@
             </tr>
             <tr>
 
-                <td colspan="2">{{ $rollNumberSlip->test->test_center }}</td>
+                <td colspan="2"><?php echo e($rollNumberSlip->test->test_center); ?></td>
 
             </tr>
             <tr>
                 <th>Organization Name</th>
                 <th>Job Post</th>
-                {{-- <th>District</th> --}}
+                
             </tr>
             <tr>
-                <td>{{ $rollNumberSlip->application->jobPost->organization_name }}</td>
-                <td>{{ $rollNumberSlip->application->jobPost->title }}</td>
-                {{-- <td>{{ $rollNumberSlip->application->user->district_of_domicile }}</td> --}}
+                <td><?php echo e($rollNumberSlip->application->jobPost->organization_name); ?></td>
+                <td><?php echo e($rollNumberSlip->application->jobPost->title); ?></td>
+                
             </tr>
         </table>
 <br>
@@ -291,3 +291,4 @@
 
 </body>
 </html>
+<?php /**PATH D:\CEAA\ceaa\resources\views/pdf/roll-number-slip.blade.php ENDPATH**/ ?>

@@ -56,11 +56,13 @@ Route::get('/applicationstatus', [FrontEndController::class, 'applicationstatus'
 Route::get('page/{slug}', [FrontEndController::class, 'pages'])->name('page.show');
 Route::get('ourtrem/{slug}', [FrontEndController::class, 'ourtrem'])->name('trem.show');
 
-
+Route::middleware('auth')->group(
+    function () {
 Route::get('/profile', [ProfileController::class, 'profileshow'])->name('profile');
 Route::get('/profile/edit', [ProfileController::class, 'profileedit'])->name('profile.edit');
 Route::put('/profile', [ProfileController::class, 'profileupdate'])->name('profile.update');
-
+    }
+);
 
 Route::get('/postsjob/{id}', [JobPostFrontController::class, 'show'])->name('postsjob.show');
 Route::post('/postsjob/{id}/apply', [JobPostFrontController::class, 'apply'])->name('postsjob.apply');
