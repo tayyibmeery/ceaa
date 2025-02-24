@@ -66,20 +66,25 @@ class SlipAndResultController extends Controller
 
     public function searchresult(Request $request)
     {
-
         $request->validate([
             'cnic' => 'required|string',
         ]);
+
         $user = User::where('cnic', $request->cnic)->first();
 
         if (!$user) {
             return redirect()->back()->with('error', 'User not found.');
         }
 
-        // Find result based on the user's application
-        $result = Result::whereHas('application', function ($query) use ($user) {
+        // Find result with all necessary relationships
+        $result = Result::with([
+            'application.user',
+            'application.jobPost',
+            'application.tests'
+        ])->whereHas('application', function ($query) use ($user) {
             $query->where('user_id', $user->id);
-        })->first(); // Use `get()` if multiple results should be retrieved
+        })->first();
+     
 
         if (!$result) {
             return redirect()->back()->with('error', 'Result not found.');
