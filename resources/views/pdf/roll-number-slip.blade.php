@@ -190,7 +190,29 @@
                     <th style="text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Name:</strong></th>
                     <th style="text-align: left">{{ $rollNumberSlip->application->user->first_name }} {{ $rollNumberSlip->application->user->last_name }}</th>
                     <td></td>
-                    <th rowspan="3" style="text-align: center;"><img src="{{ public_path('storage/' . ($rollNumberSlip->application->user->profile_picture ?? 'default.jpg')) }}" class="profile-image" alt="Profile Photo"></th>
+                    <th rowspan="3" style="text-align: center;">
+
+                        @php
+    // Get the image path
+    $imagePath = $result->application->user->profile_picture ?? 'default.jpg';
+    $fullPath = public_path($imagePath);
+
+    // Check if the image exists
+    if (file_exists($fullPath)) {
+        // Get the image MIME type
+        $mimeType = mime_content_type($fullPath); // e.g., image/jpeg or image/png
+
+        // Encode the image to Base64
+        $imageData = base64_encode(file_get_contents($fullPath));
+
+        // Generate the Base64 image source
+        $imageSrc = 'data:' . $mimeType . ';base64,' . $imageData;
+    } else {
+        // Fallback to default image
+        $imageSrc = asset('default.jpg');
+    }
+@endphp
+                        <img src="{{$imageSrc }}" class="profile-image" alt="Profile Photo"></th>
                 </tr>
                 <tr>
                     <th style="text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CNIC:</strong></th>
@@ -208,15 +230,7 @@
 
 
 
-        {{-- <div>
-                <p><strong>Name:</strong> {{ $rollNumberSlip->application->user->first_name }} {{ $rollNumberSlip->application->user->last_name }}</p>
-        <p><strong>CNIC:</strong> {{ $rollNumberSlip->application->user->cnic }}</p>
-        <p><strong>Roll Number:</strong> {{ $rollNumberSlip->roll_number }}</p>
-    </div>
-    <div>
-        <img src="{{ public_path('storage/' . ($rollNumberSlip->application->user->profile_picture ?? 'default.jpg')) }}" class="profile-image" alt="Profile Photo">
-    </div> --}}
-    {{-- </div> --}}
+       
     <br>
 
 

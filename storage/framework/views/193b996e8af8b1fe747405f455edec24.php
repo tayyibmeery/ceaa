@@ -146,11 +146,11 @@
 <body>
     <div class="container">
         <div class="watermark">
-            <img src="{{ public_path("frontend/images/logo.png") }}" alt="Watermark">
+            <img src="<?php echo e(public_path("frontend/images/logo.png")); ?>" alt="Watermark">
         </div>
 
         <div class="header">
-            <img src="{{ public_path("frontend/images/logo.png") }}" class="logo" alt="Logo">
+            <img src="<?php echo e(public_path("frontend/images/logo.png")); ?>" class="logo" alt="Logo">
             <div class="slip-title">RESULT CARD</div>
         </div>
 
@@ -158,11 +158,12 @@
             <table>
                 <tr>
                     <th style="text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Name:</strong></th>
-                    <th style="text-align: left">{{ $result->application->user->first_name }}
-                        {{ $result->application->user->last_name }}</th>
+                    <th style="text-align: left"><?php echo e($result->application->user->first_name); ?>
+
+                        <?php echo e($result->application->user->last_name); ?></th>
                     <td></td>
                     <th rowspan="3" style="text-align: center;">
-@php
+<?php
     // Get the image path
     $imagePath = $result->application->user->profile_picture ?? 'default.jpg';
     $fullPath = public_path($imagePath);
@@ -181,19 +182,19 @@
         // Fallback to default image
         $imageSrc = asset('default.jpg');
     }
-@endphp
+?>
 
 
-                        <img src="{{ $imageSrc }}" class="profile-image" alt="Profile Photo"></th>
+                        <img src="<?php echo e($imageSrc); ?>" class="profile-image" alt="Profile Photo"></th>
                 </tr>
                 <tr>
                     <th style="text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CNIC:</strong></th>
-                    <th style="text-align: left">{{ $result->application->user->cnic }}</th>
+                    <th style="text-align: left"><?php echo e($result->application->user->cnic); ?></th>
                     <td></td>
                 </tr>
                 <tr>
                     <th style="text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Post Applied:</strong></th>
-                    <th style="text-align: left">{{ $result->application->jobPost->title }}</th>
+                    <th style="text-align: left"><?php echo e($result->application->jobPost->title); ?></th>
                     <td></td>
                 </tr>
             </table>
@@ -208,32 +209,34 @@
                 <th>Percentage</th>
             </tr>
             <tr>
-                <td>{{ $result->total_marks }}</td>
-                <td>{{ $result->marks_obtained }}</td>
-                <td>{{ number_format(($result->marks_obtained / $result->total_marks) * 100, 2) }}%</td>
+                <td><?php echo e($result->total_marks); ?></td>
+                <td><?php echo e($result->marks_obtained); ?></td>
+                <td><?php echo e(number_format(($result->marks_obtained / $result->total_marks) * 100, 2)); ?>%</td>
             </tr>
             <tr>
                 <th colspan="3">Result Status</th>
             </tr>
             <tr>
-                <td colspan="3" style="color: {{ ($result->marks_obtained / $result->total_marks) * 100 >= 50 ? "#1e7e34" : "#dc3545" }}; font-weight: bold;">
-                    {{ ($result->marks_obtained / $result->total_marks) * 100 >= 50 ? "PASSED" : "NOT PASSED" }}
+                <td colspan="3" style="color: <?php echo e(($result->marks_obtained / $result->total_marks) * 100 >= 50 ? "#1e7e34" : "#dc3545"); ?>; font-weight: bold;">
+                    <?php echo e(($result->marks_obtained / $result->total_marks) * 100 >= 50 ? "PASSED" : "NOT PASSED"); ?>
+
                 </td>
             </tr>
             <tr>
                 <th colspan="3">Test Details</th>
             </tr>
             <tr>
-                <td colspan="3">{{ optional($result->application->tests)->test_center ?? "N/A" }}</td>
+                <td colspan="3"><?php echo e(optional($result->application->tests)->test_center ?? "N/A"); ?></td>
             </tr>
             <tr>
                 <th>Organization Name</th>
                 <th colspan="2">Test Date</th>
             </tr>
             <tr>
-                <td>{{ $result->application->jobPost->organization_name }}</td>
+                <td><?php echo e($result->application->jobPost->organization_name); ?></td>
                 <td colspan="2">
-                    {{ optional($result->application->tests)->test_date ? \Carbon\Carbon::parse($result->application->tests->test_date)->format("d M, Y") : "N/A" }}
+                    <?php echo e(optional($result->application->tests)->test_date ? \Carbon\Carbon::parse($result->application->tests->test_date)->format("d M, Y") : "N/A"); ?>
+
                 </td>
             </tr>
         </table>
@@ -242,21 +245,22 @@
 
         <div class="instructions">
             <div class="section-title">Remarks</div>
-            <p style="margin: 10px 0; font-size: 12px;">{{ $result->remarks }}</p>
+            <p style="margin: 10px 0; font-size: 12px;"><?php echo e($result->remarks); ?></p>
         </div>
 
         <div class="footer">
             <br>
             <p class="center">Computer generated result card - No signature required</p>
             <p class="center" style="color:#1e7e34; font-weight:bold;">
-                @if (($result->marks_obtained / $result->total_marks) * 100 >= 50)
+                <?php if(($result->marks_obtained / $result->total_marks) * 100 >= 50): ?>
                 Congratulations on passing the test!
-                @else
+                <?php else: ?>
                 Better luck next time!
-                @endif
+                <?php endif; ?>
             </p>
         </div>
     </div>
 </body>
 
 </html>
+<?php /**PATH D:\CEAA\ceaa\resources\views/pdf/result-card.blade.php ENDPATH**/ ?>

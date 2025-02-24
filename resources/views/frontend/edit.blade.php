@@ -22,7 +22,7 @@
                         <div class="card-body text-center">
 
                             <div class="mb-3">
-                                <img src="{{ asset("public/" . (auth()->user()->profile_picture ?? "default-profile.jpg")) }}" class="rounded-circle mb-3 border border-2" width="150" height="150" id="preview-image">
+                                <img src="{{ asset( (auth()->user()->profile_picture ?? "default-profile.jpg")) }}" class="rounded-circle mb-3 border border-2" width="150" height="150" id="preview-image">
                             </div>
                             <div class="mb-3">
                                 <input type="file" class="form-control @error(" profile_picture") is-invalid @enderror" id="profile_picture" name="profile_picture" onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])" accept="image/*">

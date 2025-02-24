@@ -68,7 +68,7 @@
                     <div class="row mb-4">
                         <div class="col-12 text-center">
                             <h5 class="card-title mb-3">Profile Picture</h5>
-                            <img src="{{ asset("storage/" . (auth()->user()->profile_picture ?? "default-profile.jpg")) }}" alt="Profile Picture" class="rounded-circle border-3 border-success mb-3 border shadow-sm" style="width: 150px; height: 150px; object-fit: cover;">
+                            <img src="{{ asset (auth()->user()->profile_picture ?? "default-profile.jpg") }}" alt="Profile Picture" class="rounded-circle border-3 border-success mb-3 border shadow-sm" style="width: 150px; height: 150px; object-fit: cover;">
                         </div>
                     </div>
 

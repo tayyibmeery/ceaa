@@ -52,7 +52,7 @@
                             <li class="notification-box blink dynamic border-bottom small">
                                 <div class="row lh-sm mx-1">
                                     <strong class="text-info">{{ $post->title }}</strong>
-                                    <a href="{{ asset("storage/" . $post->advertisement_file) }}" class="btn btn-success btn-sm blink dynamic float-end">
+                                    <a href="{{ asset( $post->advertisement_file) }}" class="btn btn-success btn-sm blink dynamic float-end">
                                         {{ $post->title }} -
                                         {{ \Carbon\Carbon::parse($post->advertisement_date)->format("M/Y") }}
                                     </a>
@@ -153,7 +153,7 @@
                                         </td>
                                         <td>
                                             @if ($jobPost->advertisement_file)
-                                            <a href="{{ asset("storage/" . $jobPost->advertisement_file) }}" class="btn btn-info btn-sm" target="_blank">
+                                            <a href="{{ asset( $jobPost->advertisement_file) }}" class="btn btn-info btn-sm" target="_blank">
                                                 <i class="fas fa-download"></i> Ad
                                             </a>
                                             @endif

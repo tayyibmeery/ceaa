@@ -7,23 +7,23 @@
             <h2>Edit Profile</h2>
             <p class="text-muted">Update your personal information and education details</p>
         </div>
-
-        <div class="row">
-            <div class="col-lg-4">
-                <!-- Profile Picture Card -->
-                <div class="card mb-4">
-                    <div class="card-header bg-success py-3 text-center text-white">
-                        <h5 class="mb-0">Profile Picture</h5>
-                    </div>
-                    <div class="card-body text-center">
-                           <form action="<?php echo e(route("profile.update")); ?>" method="POST" enctype="multipart/form-data">
-                            <?php echo csrf_field(); ?>
-                            <?php echo method_field("PUT"); ?>
-                        <div class="mb-3">
-                            <img src="<?php echo e(asset("public/" . (auth()->user()->profile_picture ?? "default-profile.jpg"))); ?>" class="rounded-circle mb-3 border border-2" width="150" height="150" id="preview-image">
+        <form action="<?php echo e(route("profile.update")); ?>" method="POST" enctype="multipart/form-data">
+            <?php echo csrf_field(); ?>
+            <?php echo method_field("PUT"); ?>
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Profile Picture Card -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-success py-3 text-center text-white">
+                            <h5 class="mb-0">Profile Picture</h5>
                         </div>
-                        <div class="mb-3">
-                            <input type="file" class="form-control <?php $__errorArgs = [" profile_picture"];
+                        <div class="card-body text-center">
+
+                            <div class="mb-3">
+                                <img src="<?php echo e(asset( (auth()->user()->profile_picture ?? "default-profile.jpg"))); ?>" class="rounded-circle mb-3 border border-2" width="150" height="150" id="preview-image">
+                            </div>
+                            <div class="mb-3">
+                                <input type="file" class="form-control <?php $__errorArgs = [" profile_picture"];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -31,60 +31,60 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" id="profile_picture" name="profile_picture" onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])" accept="image/*">
-                            <?php $__errorArgs = ["profile_picture"];
+                                <?php $__errorArgs = ["profile_picture"];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback"><?php echo e($message); ?></div>
-                            <?php unset($message);
+                                <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-8">
-                <div class="card mb-4">
-                    <div class="card-header bg-success py-3 text-center text-white">
-                        <h5 class="mb-0">Personal Information</h5>
-                    </div>
-                    <div class="card-body">
-                        <!-- Success Message -->
-                        <?php if(session("success")): ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="fas fa-check-circle me-2"></i>
-                            <?php echo e(session("success")); ?>
-
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-header bg-success py-3 text-center text-white">
+                            <h5 class="mb-0">Personal Information</h5>
                         </div>
-                        <?php endif; ?>
+                        <div class="card-body">
+                            <!-- Success Message -->
+                            <?php if(session("success")): ?>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="fas fa-check-circle me-2"></i>
+                                <?php echo e(session("success")); ?>
 
-                        <!-- Error Message -->
-                        <?php if(session("error")): ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle me-2"></i>
-                            <?php echo e(session("error")); ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <?php endif; ?>
 
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <?php endif; ?>
+                            <!-- Error Message -->
+                            <?php if(session("error")): ?>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                <?php echo e(session("error")); ?>
 
-                        <!-- Validation Errors -->
-                        <?php if($errors->any()): ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            <strong>Please fix the following errors:</strong>
-                            <ul class="mb-0">
-                                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li><?php echo e($error); ?></li>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </ul>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <?php endif; ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <?php endif; ?>
+
+                            <!-- Validation Errors -->
+                            <?php if($errors->any()): ?>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Please fix the following errors:</strong>
+                                <ul class="mb-0">
+                                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li><?php echo e($error); ?></li>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <?php endif; ?>
 
 
 
@@ -447,11 +447,12 @@ unset($__errorArgs, $__bag); ?>
                                     <i class="fas fa-times me-1"></i>Cancel
                                 </a>
                             </div>
-                        </form>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </section>
 
