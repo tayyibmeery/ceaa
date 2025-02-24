@@ -57,7 +57,7 @@
                     <td>{{ $jobPost->application_deadline }}</td>
                     <td>
                       @if($jobPost->advertisement_file)
-                        <a href="{{ asset('storage/' . $jobPost->advertisement_file) }}" target="_blank">View File</a>
+                        <a href="{{ asset( $jobPost->advertisement_file) }}" target="_blank">View File</a>
                       @else
                         No file uploaded
                       @endif

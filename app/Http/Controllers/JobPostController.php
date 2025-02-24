@@ -40,13 +40,23 @@ class JobPostController extends Controller
 
         ]);
 
-        // Handle file upload for advertisement file
+
         $filePath = null;
         if ($request->hasFile('advertisement_file')) {
-            $filePath = $request->file('advertisement_file')->store('job-posts', 'public');
+
+            $uploadPath = public_path('job-posts');
+
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true); // Create directory with full permissions
+            }
+
+            $fileName = time() . '_' . $request->file('advertisement_file')->getClientOriginalName();
+            $request->file('advertisement_file')->move($uploadPath, $fileName);
+
+            $filePath = 'job-posts/' . $fileName;
         }
 
-        // Convert checkbox to boolean for is_visible
+
         $isVisible = $request->input('is_visible') === 'on' ? true : false; // Checkbox to boolean (true if checked, false if unchecked)
 
         // Create the JobPost
