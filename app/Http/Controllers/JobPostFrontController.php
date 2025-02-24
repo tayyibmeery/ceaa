@@ -6,7 +6,7 @@ use App\Models\Application;
 use Carbon\Carbon;
 use App\Models\JobPost;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
 class JobPostFrontController extends Controller
@@ -167,17 +167,39 @@ class JobPostFrontController extends Controller
     /**
      * Handle file uploads for the application
      */
+    // private function handleFileUploads(Request $request): array
+    // {
+    //     $fileData = [];
+    //     foreach (['resume', 'cover_letter', 'fees_receipt'] as $fileType) {
+    //         if ($request->hasFile($fileType)) {
+    //             $fileData[$fileType] = $request->file($fileType)
+    //                 ->store("uploads/$fileType", 'public');
+    //         } else {
+    //             $fileData[$fileType] = null;
+    //         }
+    //     }
+    //     return $fileData;
+    // }
+
+
     private function handleFileUploads(Request $request): array
     {
         $fileData = [];
+
         foreach (['resume', 'cover_letter', 'fees_receipt'] as $fileType) {
             if ($request->hasFile($fileType)) {
-                $fileData[$fileType] = $request->file($fileType)
-                    ->store("uploads/$fileType", 'public');
+                $uploadPath = public_path("uploads/$fileType");
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0777, true); // Create directory with full permissions
+                }
+                $fileName = time() . '_' . $request->file($fileType)->getClientOriginalName();
+                $request->file($fileType)->move($uploadPath, $fileName);
+                $fileData[$fileType] = "uploads/$fileType/$fileName";
             } else {
                 $fileData[$fileType] = null;
             }
         }
+
         return $fileData;
     }
 }
