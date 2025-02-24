@@ -76,21 +76,20 @@ class SlipAndResultController extends Controller
             return redirect()->back()->with('error', 'User not found.');
         }
 
-        // Find result with all necessary relationships
-        $result = Result::with([
+        // Find all results with necessary relationships
+        $results = Result::with([
             'application.user',
             'application.jobPost',
             'application.tests'
         ])->whereHas('application', function ($query) use ($user) {
             $query->where('user_id', $user->id);
-        })->first();
-     
+        })->get();
 
-        if (!$result) {
-            return redirect()->back()->with('error', 'Result not found.');
+        if ($results->isEmpty()) {
+            return redirect()->back()->with('error', 'No results found.');
         }
 
-        return view('frontend.result', compact('result'));
+        return view('frontend.result', compact('results'));
     }
 
     public function downloadresult($id)
