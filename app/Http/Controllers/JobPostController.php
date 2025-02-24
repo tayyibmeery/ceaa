@@ -43,18 +43,17 @@ class JobPostController extends Controller
 
         $filePath = null;
         if ($request->hasFile('advertisement_file')) {
-
-            $uploadPath = public_path('job-posts');
-
+            $uploadDirectory = 'uploads/job-posts';
+            $uploadPath = public_path($uploadDirectory);
             if (!file_exists($uploadPath)) {
                 mkdir($uploadPath, 0777, true); // Create directory with full permissions
             }
-
             $fileName = time() . '_' . $request->file('advertisement_file')->getClientOriginalName();
             $request->file('advertisement_file')->move($uploadPath, $fileName);
 
-            $filePath = 'job-posts/' . $fileName;
+            $filePath = $uploadDirectory . '/' . $fileName;
         }
+
 
 
         $isVisible = $request->input('is_visible') === 'on' ? true : false; // Checkbox to boolean (true if checked, false if unchecked)
@@ -95,26 +94,31 @@ class JobPostController extends Controller
             'organization_name' => 'required|string|max:255',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'requirements' => 'nullable|string', // Optional requirements
+            'requirements' => 'nullable|string',
             'advertisement_date' => 'required|date',
             'application_deadline' => 'required|date',
-            'advertisement_file' => 'nullable|mimes:pdf,jpeg,png|max:10240', // File validation
+            'advertisement_file' => 'nullable|mimes:pdf,jpeg,png|max:10240',
             'status' => 'required|in:active,inactive,expired',
-
         ]);
+
         $isVisible = $request->input('is_visible') === 'on' ? true : false;
-        // Handle file upload if a new file is uploaded
+
         if ($request->hasFile('advertisement_file')) {
-            // Delete the old file if it exists
-            if ($jobPost->advertisement_file) {
-                Storage::disk('public')->delete($jobPost->advertisement_file);
+            if ($jobPost->advertisement_file && file_exists(public_path($jobPost->advertisement_file))) {
+                unlink(public_path($jobPost->advertisement_file));
             }
 
-            $filePath = $request->file('advertisement_file')->store('job-posts', 'public');
+            $uploadDirectory = 'uploads/job-posts';
+            $uploadPath = public_path($uploadDirectory);
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+            $fileName = time() . '_' . $request->file('advertisement_file')->getClientOriginalName();
+            $request->file('advertisement_file')->move($uploadPath, $fileName);
+            $filePath = $uploadDirectory . '/' . $fileName;
         } else {
-            $filePath = $jobPost->advertisement_file; // Retain the old file if no new file is uploaded
+            $filePath = $jobPost->advertisement_file;
         }
-
         // Update the JobPost
         $jobPost->update([
             'organization_name' => $request->organization_name,
@@ -133,9 +137,9 @@ class JobPostController extends Controller
 
     public function destroy(JobPost $jobPost)
     {
-        // Delete the file associated with the job post
-        if ($jobPost->advertisement_file) {
-            Storage::disk('public')->delete($jobPost->advertisement_file);
+        // Delete the file from public directory
+        if ($jobPost->advertisement_file && file_exists(public_path($jobPost->advertisement_file))) {
+            unlink(public_path($jobPost->advertisement_file));
         }
 
         $jobPost->delete();
