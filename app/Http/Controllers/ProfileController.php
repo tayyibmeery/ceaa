@@ -94,9 +94,10 @@ class ProfileController extends Controller
                 $user->password = Hash::make($validated['password']);
             }
 
-
+// dd($request);
 
             if ($request->hasFile('profile_picture')) {
+                // dd($request->file('profile_picture'));
                 if ($user->profile_picture && file_exists(public_path($user->profile_picture))) {
                     unlink(public_path($user->profile_picture));
                 }

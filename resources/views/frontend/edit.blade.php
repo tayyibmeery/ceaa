@@ -18,8 +18,11 @@
                         <h5 class="mb-0">Profile Picture</h5>
                     </div>
                     <div class="card-body text-center">
+                           <form action="{{ route("profile.update") }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method("PUT")
                         <div class="mb-3">
-                            <img src="{{ asset("storage/" . (auth()->user()->profile_picture ?? "default-profile.jpg")) }}" class="rounded-circle mb-3 border border-2" width="150" height="150" id="preview-image">
+                            <img src="{{ asset("public/" . (auth()->user()->profile_picture ?? "default-profile.jpg")) }}" class="rounded-circle mb-3 border border-2" width="150" height="150" id="preview-image">
                         </div>
                         <div class="mb-3">
                             <input type="file" class="form-control @error(" profile_picture") is-invalid @enderror" id="profile_picture" name="profile_picture" onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])" accept="image/*">
@@ -69,9 +72,7 @@
                         </div>
                         @endif
 
-                        <form action="{{ route("profile.update") }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method("PUT")
+
 
                             <!-- Basic Information -->
                             <div class="row g-3">
